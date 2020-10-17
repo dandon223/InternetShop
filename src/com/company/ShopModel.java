@@ -1,11 +1,14 @@
 package com.company;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ShopModel {
     private Connection connection;
     public ShopModel(){
         this.setConnection();
+        /*
         try{
             Statement statement = connection.createStatement();
             String sqlQuery = "CREATE TABLE IF NOT EXISTS People" +
@@ -33,12 +36,48 @@ public class ShopModel {
                     "PRIMARY KEY( id ))";
             statement.executeUpdate(sqlQuery);
             sqlQuery = "INSERT INTO Items "+
+                    "VALUES (null,'Banana',5,990,0)";
+            statement.executeUpdate(sqlQuery);
+            sqlQuery = "INSERT INTO Items "+
+                    "VALUES (null,'Book',45,56,65)";
+            statement.executeUpdate(sqlQuery);
+            sqlQuery = "INSERT INTO Items "+
                     "VALUES (null,'TV',1000,10,0)";
+            statement.executeUpdate(sqlQuery);
+            sqlQuery = "INSERT INTO Items "+
+                    "VALUES (null,'Paper',1,9999,15)";
             statement.executeUpdate(sqlQuery);
             connection.close();
         }catch (SQLException e){
             System.out.println(e);
+        }*/
+    }
+    Object[][] getData(){
+        this.setConnection();
+        ResultSet rs;
+        String sqlQuery = "SELECT * FROM Items";
+        List<List<Object>> data = new ArrayList<>();
+        try{
+            Statement statement = connection.createStatement();
+            rs= statement.executeQuery(sqlQuery);
+            while(rs.next()){
+                List<Object> row = new ArrayList();
+                row.add(rs.getInt("id"));
+                row.add(rs.getString("name"));
+                row.add(rs.getInt("cost"));
+                row.add(rs.getInt("total"));
+                row.add(rs.getInt("booked"));
+                data.add(row);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
         }
+        Object[][] data2 = new Object[data.size()][];
+        for (int i=0; i<data.size();i++) {
+            List<Object> aList = data.get(i);
+            data2[i] = aList.toArray(new Object[0]);
+        }
+        return data2;
     }
     Person getPerson(String login , String password, String type){
         this.setConnection();

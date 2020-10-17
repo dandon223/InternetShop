@@ -13,9 +13,11 @@ public class CustomerViev extends JFrame {
     private JTextField howManyOrder = new JTextField();
     private JButton buyButton = new JButton("buy");
     private JButton exitButton = new JButton("exit");
+    private Object[][] data;
 
-    public CustomerViev(Person activePerson) {
+    public CustomerViev(Person activePerson, Object[][] data) {
         this.activePerson = activePerson;
+        this.data = data;
         this.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         this.setTitle("Welcome "+activePerson.getFirstName()+ " "+activePerson.getLastName());
         this.setResizable(false);
@@ -27,21 +29,16 @@ public class CustomerViev extends JFrame {
     }
     void initializeView(){
         String[] columnNames = {"id","name","cost","total","booked"};
-        Object[][] data = {
-                {"1","TV","1000","10","0"},
-                {"2","Adidas","667","5","4"},
-                {"3","Banana","5","100","21"},
-                {"4","Pizza","29","54","45"},
-        };
+
         table = new JTable(data, columnNames);
-        table.setPreferredScrollableViewportSize(new Dimension(400,50));
+        table.setPreferredScrollableViewportSize(new Dimension(400,150));
         table.setFillsViewportHeight(true);
 
         JScrollPane scrollPane = new JScrollPane(table);
         this.add(scrollPane,BorderLayout.NORTH);
 
         JPanel southPanel = new JPanel();
-        southPanel.setLayout(new GridLayout(1, 6));
+        southPanel.setLayout(new GridLayout(2, 5));
         southPanel.add(new JLabel("What: ", SwingConstants.CENTER));
         southPanel.add(idOrder);
 
@@ -49,6 +46,10 @@ public class CustomerViev extends JFrame {
         southPanel.add(howManyOrder);
         southPanel.add(buyButton);
         southPanel.add(exitButton);
+        southPanel.add(new JLabel("", SwingConstants.CENTER));
+        southPanel.add(new JLabel("", SwingConstants.CENTER));
+        southPanel.add(new JLabel("", SwingConstants.CENTER));
+        southPanel.add(new JLabel("", SwingConstants.CENTER));
         this.add(southPanel,BorderLayout.SOUTH);
     }
 }

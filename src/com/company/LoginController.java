@@ -27,7 +27,7 @@ public class LoginController {
                 activePerson = person;
                 loginView.setVisible(false);
                 customerController.setActivePerson(activePerson);
-                customerController.setCustomerViev(new CustomerViev(activePerson));
+                customerController.setCustomerViev(new CustomerViev(activePerson,shopModel.getData()));
             }
         }
     }
