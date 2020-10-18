@@ -44,6 +44,7 @@ public class CustomerController {
             }
             tableModel.setValueAt(howMany+howManyAlreadyBooked, order-1,4);
             tableModel.fireTableDataChanged();
+            shopModel.changeCellData(order,howMany+howManyAlreadyBooked);
         }
     }
 }

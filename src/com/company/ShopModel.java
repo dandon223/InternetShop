@@ -123,6 +123,18 @@ public class ShopModel {
             System.out.println(e);
         }
     }
+    public boolean changeCellData(int id, int booked ){
+        this.setConnection();
+        String sqlQuery = "UPDATE Items SET booked = '"+booked+"'"+
+                " WHERE id = '"+id+"'";
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(sqlQuery);
+        }catch (SQLException e){
+            return false;
+        }
+        return true;
+    }
 
 
 }
