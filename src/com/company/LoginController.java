@@ -1,7 +1,6 @@
 package com.company;
 
-import com.mysql.cj.log.Log;
-
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -23,11 +22,14 @@ public class LoginController {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             Person person = shopModel.getPerson(loginView.getLoginText(),new String(loginView.getPasswordText()), loginView.getPersonType());
-            if(person!=null){
+            if(person==null){
+                loginView.clearTexts();
+                JOptionPane.showMessageDialog(loginView,"Please check your login or password. Thank you!");
+                return;
+            }
                 activePerson = person;
                 loginView.setVisible(false);
                 customerController = new CustomerController(shopModel,activePerson);
-            }
         }
     }
 }

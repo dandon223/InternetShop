@@ -77,4 +77,8 @@ class LoginView extends JFrame {
         label.setIcon(new ImageIcon("shop-icon.png"));
         this.add(label,BorderLayout.CENTER);
     }
+    public void clearTexts(){
+        loginField.setText("");
+        passwordField.setText("");
+    }
 }
