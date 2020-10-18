@@ -15,11 +15,15 @@ public class CustomerViev extends JFrame {
     private JTextField howManyOrder = new JTextField();
     private JButton buyButton = new JButton("buy");
     private JButton exitButton = new JButton("exit");
+    private JButton listButton = new JButton("List");
     String[] columnNames = {"id","name","cost","total","booked"};
     private Object[][] data;
 
     public String getIdOrder() {
         return idOrder.getText();
+    }
+    public String getHowManyOrder(){
+        return howManyOrder.getText();
     }
 
     public TableModel getTableModel() {
@@ -57,7 +61,7 @@ public class CustomerViev extends JFrame {
         southPanel.add(howManyOrder);
         southPanel.add(buyButton);
         southPanel.add(exitButton);
-        southPanel.add(new JLabel("", SwingConstants.CENTER));
+        southPanel.add(listButton);
         southPanel.add(new JLabel("", SwingConstants.CENTER));
         southPanel.add(new JLabel("", SwingConstants.CENTER));
         southPanel.add(new JLabel("", SwingConstants.CENTER));

@@ -9,16 +9,10 @@ public class CustomerController {
     private ShopModel shopModel;
     private CustomerViev customerViev;
 
-    public CustomerController( ShopModel shopModel) {
+    public CustomerController( ShopModel shopModel, Person activePerson) {
         this.shopModel = shopModel;
-    }
-
-    public void setActivePerson(Person activePerson) {
         this.activePerson = activePerson;
-    }
-
-    public void setCustomerViev(CustomerViev customerViev) {
-        this.customerViev = customerViev;
+        this.customerViev = new CustomerViev(activePerson, shopModel.getData());
         this.customerViev.addBuyButtonListener(new BuyButtonListener());
     }
 
@@ -26,9 +20,25 @@ public class CustomerController {
 
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-            String order = customerViev.getIdOrder();
             TableModel tableModel = customerViev.getTableModel();
-            tableModel.setValueAt(order,2,3);
+            int order;
+            int howMany;
+            try{
+                order = Integer.parseInt(customerViev.getIdOrder());
+                howMany = Integer.parseInt(customerViev.getHowManyOrder());
+
+            }catch (NumberFormatException e ){
+                return;
+            }
+            if(order > tableModel.getRowCount()){
+                return;
+            }
+            int howManyAlreadyBooked = (int) tableModel.getValueAt(order-1,4);
+            int howManyTotal = (Integer) tableModel.getValueAt(order-1,3);
+            if(howManyTotal < howManyAlreadyBooked +howMany){
+                return;
+            }
+            tableModel.setValueAt(howMany+howManyAlreadyBooked, order-1,4);
             tableModel.fireTableDataChanged();
         }
     }

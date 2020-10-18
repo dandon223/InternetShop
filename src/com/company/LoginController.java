@@ -1,6 +1,7 @@
 package com.company;
 
-import java.awt.*;
+import com.mysql.cj.log.Log;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -11,10 +12,9 @@ public class LoginController {
     private Person activePerson;
     private CustomerController customerController;
 
-    public LoginController(LoginView loginView, ShopModel shopModel, CustomerController customerController){
-        this.loginView = loginView;
+    public LoginController( ShopModel shopModel){
+        this.loginView = new LoginView();
         this.shopModel = shopModel;
-        this.customerController = customerController;
         this.loginView.addLoginListener(new LoginButtonListener());
     }
 
@@ -26,8 +26,7 @@ public class LoginController {
             if(person!=null){
                 activePerson = person;
                 loginView.setVisible(false);
-                customerController.setActivePerson(activePerson);
-                customerController.setCustomerViev(new CustomerViev(activePerson,shopModel.getData()));
+                customerController = new CustomerController(shopModel,activePerson);
             }
         }
     }
