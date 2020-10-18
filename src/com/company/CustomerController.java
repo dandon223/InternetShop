@@ -1,5 +1,6 @@
 package com.company;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -28,14 +29,17 @@ public class CustomerController {
                 howMany = Integer.parseInt(customerViev.getHowManyOrder());
 
             }catch (NumberFormatException e ){
+                JOptionPane.showMessageDialog(customerViev,"Please input only numbers. Thank you!");
                 return;
             }
             if(order > tableModel.getRowCount()){
+                JOptionPane.showMessageDialog(customerViev,"Please check your order number. Thank you!");
                 return;
             }
             int howManyAlreadyBooked = (int) tableModel.getValueAt(order-1,4);
             int howManyTotal = (Integer) tableModel.getValueAt(order-1,3);
             if(howManyTotal < howManyAlreadyBooked +howMany){
+                JOptionPane.showMessageDialog(customerViev,"Unfortunately you try to order to much!");
                 return;
             }
             tableModel.setValueAt(howMany+howManyAlreadyBooked, order-1,4);
