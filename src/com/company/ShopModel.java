@@ -39,7 +39,7 @@ public class ShopModel {
                     "VALUES (null,'Banana',5,990,0)";
             statement.executeUpdate(sqlQuery);
             sqlQuery = "INSERT INTO Items "+
-                    "VALUES (null,'Book',45,56,65)";
+                    "VALUES (null,'Book',45,56,10)";
             statement.executeUpdate(sqlQuery);
             sqlQuery = "INSERT INTO Items "+
                     "VALUES (null,'TV',1000,10,0)";

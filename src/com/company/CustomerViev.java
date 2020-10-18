@@ -2,18 +2,29 @@ package com.company;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class CustomerViev extends JFrame {
     private static final int DEFAULT_WIDTH = 600;
     private static final int DEFAULT_HEIGHT = 300;
     private Person activePerson;
     private JTable table;
+    private TableModel tableModel ;
 
     private JTextField idOrder = new JTextField();
     private JTextField howManyOrder = new JTextField();
     private JButton buyButton = new JButton("buy");
     private JButton exitButton = new JButton("exit");
+    String[] columnNames = {"id","name","cost","total","booked"};
     private Object[][] data;
+
+    public String getIdOrder() {
+        return idOrder.getText();
+    }
+
+    public TableModel getTableModel() {
+        return tableModel;
+    }
 
     public CustomerViev(Person activePerson, Object[][] data) {
         this.activePerson = activePerson;
@@ -28,11 +39,11 @@ public class CustomerViev extends JFrame {
         this.initializeView();
     }
     void initializeView(){
-        String[] columnNames = {"id","name","cost","total","booked"};
-
-        table = new JTable(data, columnNames);
+        tableModel = new TableModel(columnNames,data);
+        table = new JTable(tableModel);
         table.setPreferredScrollableViewportSize(new Dimension(400,150));
         table.setFillsViewportHeight(true);
+
 
         JScrollPane scrollPane = new JScrollPane(table);
         this.add(scrollPane,BorderLayout.NORTH);
@@ -51,5 +62,9 @@ public class CustomerViev extends JFrame {
         southPanel.add(new JLabel("", SwingConstants.CENTER));
         southPanel.add(new JLabel("", SwingConstants.CENTER));
         this.add(southPanel,BorderLayout.SOUTH);
+    }
+    void addBuyButtonListener(ActionListener buyButtonListener ){
+        buyButton.addActionListener(buyButtonListener);
+
     }
 }
