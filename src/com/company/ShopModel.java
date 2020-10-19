@@ -6,8 +6,20 @@ import java.util.List;
 
 public class ShopModel {
     private Connection connection;
-    public ShopModel(){
+    public ShopModel(){/*
         this.setConnection();
+        try{
+            Statement statement = connection.createStatement();
+            String sqlQuery = "CREATE TABLE IF NOT EXISTS Orders" +
+                    "(id INT UNSIGNED AUTO_INCREMENT, " +
+                    "itemId INT, " +
+                    "personId INT, " +
+                    "howManyOrdered INT, " +
+                    "PRIMARY KEY( id ))";
+            statement.executeUpdate(sqlQuery);
+        }catch (SQLException e){
+            System.out.println(e);
+        } */
         /*
         try{
             Statement statement = connection.createStatement();
