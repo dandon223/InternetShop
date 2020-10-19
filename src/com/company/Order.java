@@ -2,15 +2,15 @@ package com.company;
 
 public class Order {
     private int orderId;
-    private int itemId;
-    private int personId;
+    private Person person;
+    private Item item;
     private int howManyOrdered;
     private  int howManyBought;
 
-    public Order(int orderId,int itemId, int personId, int howManyOrdered, int howManyBought) {
+    public Order(int orderId,Item item, Person person, int howManyOrdered, int howManyBought) {
         this.orderId = orderId;
-        this.itemId = itemId;
-        this.personId = personId;
+        this.item = item;
+        this.person = person;
         this.howManyOrdered = howManyOrdered;
         this.howManyBought = howManyBought;
     }
@@ -19,12 +19,12 @@ public class Order {
         return orderId;
     }
 
-    public int getItemId() {
-        return itemId;
+    public Item getItem() {
+        return item;
     }
 
-    public int getPersonId() {
-        return personId;
+    public Person getPerson() {
+        return person;
     }
 
     public int getHowManyOrdered() {

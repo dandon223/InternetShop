@@ -23,9 +23,9 @@ public class CustomerListViev extends JFrame {
         this.activePerson = activePerson;
         this.data = data;
         this.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
-        this.setTitle("Welcome "+activePerson.getFirstName()+ " "+activePerson.getLastName());
+        this.setTitle("Your list of products");
         this.setResizable(false);
-        this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setVisible(true);
         ImageIcon icon = new ImageIcon("shop-icon.png");
         this.setIconImage(icon.getImage());
@@ -47,12 +47,15 @@ public class CustomerListViev extends JFrame {
 
         southPanel.add(new JLabel("How many: ", SwingConstants.CENTER));
         southPanel.add(howManyOrder);
-        southPanel.add(backButton);
         southPanel.add(deleteButton);
+        southPanel.add(backButton);
         southPanel.add(new JLabel("", SwingConstants.CENTER));
         southPanel.add(new JLabel("", SwingConstants.CENTER));
         southPanel.add(new JLabel("", SwingConstants.CENTER));
         southPanel.add(new JLabel("", SwingConstants.CENTER));
         this.add(southPanel,BorderLayout.SOUTH);
+    }
+    void addBackButtonListener(ActionListener backButtonListener){
+        backButton.addActionListener(backButtonListener);
     }
 }

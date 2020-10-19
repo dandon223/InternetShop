@@ -50,13 +50,14 @@ public class CustomerController {
             tableModel.setValueAt(howMany+howManyAlreadyBooked, order-1,4);
             tableModel.fireTableDataChanged();
             shopModel.updateCellData("Items","booked",howMany+howManyAlreadyBooked,order);
-            shopModel.changeOrderTable(2,order,howMany);
+            shopModel.changeOrderTable(activePerson.getId(),order,howMany);
         }
     }
     class ListButtonListener implements ActionListener{
 
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
+            customerViev.setVisible(false);
             CustomerListController customerListController = new CustomerListController(activePerson,shopModel);
         }
     }

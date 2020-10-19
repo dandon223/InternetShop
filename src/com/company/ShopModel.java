@@ -1,14 +1,13 @@
 package com.company;
 
-import java.awt.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ShopModel {
     private Connection connection;
-    public ShopModel(){ /*
-        this.setConnection();
+    public ShopModel(){
+        this.setConnection();/*
         try{
             Statement statement = connection.createStatement();
             String sqlQuery = "CREATE TABLE IF NOT EXISTS Orders" +
@@ -61,7 +60,7 @@ public class ShopModel {
         } */
     }
     public Object[][] getItemsData(){
-        this.setConnection();
+        //this.setConnection();
         ResultSet rs;
         String sqlQuery = "SELECT * FROM Items";
         List<List<Object>> data = new ArrayList<>();
@@ -77,9 +76,9 @@ public class ShopModel {
                 row.add(rs.getInt("booked"));
                 data.add(row);
             }
-            connection.close();
+            //connection.close();
         } catch (SQLException e) {
-            System.out.println(e);
+            System.out.println(e +"82");
         }
         Object[][] data2 = new Object[data.size()][];
         for (int i=0; i<data.size();i++) {
@@ -89,25 +88,26 @@ public class ShopModel {
         return data2;
     }
     public Object[][] getOrderData(int personId){
-        this.setConnection();
+        //this.setConnection();
         ResultSet rs;
-        String sqlQuery = "SELECT * FROM Orders";
+        String sqlQuery = "SELECT * FROM Orders WHERE personId = "+personId;
         List<List<Object>> data = new ArrayList<>();
         try{
             Statement statement = connection.createStatement();
             rs= statement.executeQuery(sqlQuery);
             while(rs.next()){
                 List<Object> row = new ArrayList();
+                Item item = this.getItem(rs.getInt("itemId"));
                 row.add(rs.getInt("id"));
-                row.add(rs.getInt("itemId"));
-                row.add(rs.getInt("personId"));
+                row.add(item.getName());
+                row.add(item.getCost());
                 row.add(rs.getInt("howManyOrdered"));
                 row.add(rs.getInt("howManyBought"));
                 data.add(row);
             }
-            connection.close();
+            //connection.close();
         } catch (SQLException e) {
-            System.out.println(e);
+            System.out.println(e +"111");
         }
         Object[][] data2 = new Object[data.size()][];
         for (int i=0; i<data.size();i++) {
@@ -117,9 +117,9 @@ public class ShopModel {
         return data2;
     }
     public Person getPerson(String login , String password, String type){
-        this.setConnection();
+        //this.setConnection();
         ResultSet rs;
-        String sqlQuery = "SELECT firstName, lastName FROM People"+
+        String sqlQuery = "SELECT id, firstName, lastName FROM People"+
                           " WHERE login = '"+login+"'"+
                           " AND password = '"+password+"'"+
                           " AND type = '"+type+"'";
@@ -127,31 +127,50 @@ public class ShopModel {
             Statement statement = connection.createStatement();
             rs= statement.executeQuery(sqlQuery);
             if(rs.next()){
-                Person person = new Person(rs.getString("firstName"),rs.getString("lastName"),type);
-                connection.close();
+                Person person = new Person(rs.getInt("id"),rs.getString("firstName"),rs.getString("lastName"),type);
+                //connection.close();
                 return person;
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            System.out.println(e +"136");
         }
 
         return null;
     }
-    public Item getItem(String name){
-        this.setConnection();
+    public Person getPerson(int id){
+        //this.setConnection();
         ResultSet rs;
-        String sqlQuery = "SELECT * FROM Items"+
-                " WHERE name = '"+name+"'";
+        String sqlQuery = "SELECT * FROM People"+
+                " WHERE id = "+id;
         try{
             Statement statement = connection.createStatement();
             rs= statement.executeQuery(sqlQuery);
             if(rs.next()){
-                Item item =  new Item(rs.getString("name"),rs.getInt("cost"),rs.getInt("total"),rs.getInt("booked"));
-                connection.close();
+                Person person = new Person(rs.getInt("id"),rs.getString("firstName"),rs.getString("lastName"),rs.getString("type"));
+                //connection.close();
+                return person;
+            }
+        } catch (SQLException e) {
+            System.out.println(e +"155");
+        }
+
+        return null;
+    }
+    public Item getItem(int id){
+        //this.setConnection();
+        ResultSet rs;
+        String sqlQuery = "SELECT * FROM Items"+
+                " WHERE id = "+id;
+        try{
+            Statement statement = connection.createStatement();
+            rs= statement.executeQuery(sqlQuery);
+            if(rs.next()){
+                Item item =  new Item(rs.getInt("id"),rs.getString("name"),rs.getInt("cost"),rs.getInt("total"),rs.getInt("booked"));
+                //connection.close();
                 return  item;
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            System.out.println(e +"174");
         }
 
         return null;
@@ -162,24 +181,25 @@ public class ShopModel {
         Class.forName("com.mysql.cj.jdbc.Driver");
         connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/shop?allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "ReytanPW99");
         } catch (ClassNotFoundException | SQLException e){
-            System.out.println(e);
+            System.out.println(e +"185");
         }
     }
     public boolean updateCellData(String tableName,String whatColumn, int changeToWhat, int whatRow ){
-        this.setConnection();
+        //this.setConnection();
         String sqlQuery = "UPDATE " +tableName+ " SET "+whatColumn+" = '"+changeToWhat+"'"+
                 " WHERE id = '"+whatRow+"'";
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate(sqlQuery);
-            connection.close();
+            //connection.close();
         }catch (SQLException e){
+            System.out.println(e +"197");
             return false;
         }
         return true;
     }
     public boolean changeOrderTable(int personId, int itemId  ,int howMuch)  {
-        this.setConnection();
+        //this.setConnection();
         Order order = this.findOrder(personId , itemId);
         if(order==null){
             String sqlQuery = "INSERT INTO Orders (id, itemId, personId, howManyOrdered, howManyBought) "+
@@ -187,21 +207,21 @@ public class ShopModel {
             try {
                 Statement statement = connection.createStatement();
                 statement.executeUpdate(sqlQuery);
-                connection.close();
+                //connection.close();
                 return true;
             }catch (SQLException e){
-                System.out.println(e);
+                System.out.println(e +"213");
             }
             return false;
         }
-        System.out.println(order.getHowManyOrdered());
         String sqlQuery = "UPDATE Orders SET howManyOrdered = '"+ (howMuch+order.getHowManyOrdered()) +"'"+
                 " WHERE id = '"+order.getOrderId()+"'";
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate(sqlQuery);
-            connection.close();
+            //connection.close();
         }catch (SQLException e){
+            System.out.println(e +"225");
             return  false;
         }
         return true;
@@ -214,10 +234,13 @@ public class ShopModel {
             Statement statement = connection.createStatement();
             rs = statement.executeQuery(sqlQuery);
             if(rs.next()){
-                Order order = new Order(rs.getInt("id"),personId, itemId,rs.getInt("howManyOrdered") , rs.getInt("howManyBought"));
+                Item item = this.getItem(rs.getInt("itemId"));
+                Person person = this.getPerson(personId);
+                Order order = new Order(rs.getInt("id"),item, person,rs.getInt("howManyOrdered") , rs.getInt("howManyBought"));
                 return order;
             }
         }catch (SQLException e){
+            System.out.println(e +"244");
         }
         return null;
     }

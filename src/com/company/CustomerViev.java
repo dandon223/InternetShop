@@ -60,8 +60,8 @@ public class CustomerViev extends JFrame {
         southPanel.add(new JLabel("How many: ", SwingConstants.CENTER));
         southPanel.add(howManyOrder);
         southPanel.add(buyButton);
-        southPanel.add(exitButton);
         southPanel.add(listButton);
+        southPanel.add(new JLabel("", SwingConstants.CENTER));
         southPanel.add(new JLabel("", SwingConstants.CENTER));
         southPanel.add(new JLabel("", SwingConstants.CENTER));
         southPanel.add(new JLabel("", SwingConstants.CENTER));
