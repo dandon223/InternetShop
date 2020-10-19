@@ -42,9 +42,13 @@ public class CustomerController {
                 JOptionPane.showMessageDialog(customerViev,"Unfortunately you try to order to much!");
                 return;
             }
+            if(howMany <=0){
+                JOptionPane.showMessageDialog(customerViev,"You can only buy positive number of things.");
+                return;
+            }
             tableModel.setValueAt(howMany+howManyAlreadyBooked, order-1,4);
             tableModel.fireTableDataChanged();
-            shopModel.changeCellData(order,howMany+howManyAlreadyBooked);
+            shopModel.updateCellData("Items","booked",howMany+howManyAlreadyBooked,order);
         }
     }
 }

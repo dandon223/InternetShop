@@ -64,7 +64,7 @@ public class ShopModel {
             System.out.println(e);
         }*/
     }
-    Object[][] getData(){
+    public Object[][] getData(){
         this.setConnection();
         ResultSet rs;
         String sqlQuery = "SELECT * FROM Items";
@@ -91,7 +91,7 @@ public class ShopModel {
         }
         return data2;
     }
-    Person getPerson(String login , String password, String type){
+    public Person getPerson(String login , String password, String type){
         this.setConnection();
         ResultSet rs;
         String sqlQuery = "SELECT firstName, lastName FROM People"+
@@ -110,7 +110,7 @@ public class ShopModel {
 
         return null;
     }
-    Item getItem(String name){
+    public Item getItem(String name){
         this.setConnection();
         ResultSet rs;
         String sqlQuery = "SELECT * FROM Items"+
@@ -127,6 +127,7 @@ public class ShopModel {
 
         return null;
     }
+
     private void setConnection() {
         try {
         Class.forName("com.mysql.cj.jdbc.Driver");
@@ -135,10 +136,10 @@ public class ShopModel {
             System.out.println(e);
         }
     }
-    public boolean changeCellData(int id, int booked ){
+    public boolean updateCellData(String tableName,String whatColumn, int changeToWhat, int whatRow ){
         this.setConnection();
-        String sqlQuery = "UPDATE Items SET booked = '"+booked+"'"+
-                " WHERE id = '"+id+"'";
+        String sqlQuery = "UPDATE " +tableName+ " SET "+whatColumn+" = '"+changeToWhat+"'"+
+                " WHERE id = '"+whatRow+"'";
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate(sqlQuery);
@@ -146,6 +147,10 @@ public class ShopModel {
             return false;
         }
         return true;
+    }
+    public boolean changeOrderTable(){
+        this.setConnection();
+        return false;
     }
 
 
