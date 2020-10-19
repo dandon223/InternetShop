@@ -1,25 +1,37 @@
 package com.company;
 
 public class Order {
-    private Item item;
-    private Person person;
+    private int orderId;
+    private int itemId;
+    private int personId;
     private int howManyOrdered;
+    private  int howManyBought;
 
-    public Order(Item item, Person person, int howManyOrdered) {
-        this.item = item;
-        this.person = person;
+    public Order(int orderId,int itemId, int personId, int howManyOrdered, int howManyBought) {
+        this.orderId = orderId;
+        this.itemId = itemId;
+        this.personId = personId;
         this.howManyOrdered = howManyOrdered;
+        this.howManyBought = howManyBought;
     }
 
-    public Item getItem() {
-        return item;
+    public int getOrderId() {
+        return orderId;
     }
 
-    public Person getPerson() {
-        return person;
+    public int getItemId() {
+        return itemId;
+    }
+
+    public int getPersonId() {
+        return personId;
     }
 
     public int getHowManyOrdered() {
         return howManyOrdered;
+    }
+
+    public int getHowManyBought() {
+        return howManyBought;
     }
 }

@@ -13,8 +13,9 @@ public class CustomerController {
     public CustomerController( ShopModel shopModel, Person activePerson) {
         this.shopModel = shopModel;
         this.activePerson = activePerson;
-        this.customerViev = new CustomerViev(activePerson, shopModel.getData());
+        this.customerViev = new CustomerViev(activePerson, shopModel.getItemsData());
         this.customerViev.addBuyButtonListener(new BuyButtonListener());
+        this.customerViev.addListButtonListener(new ListButtonListener());
     }
 
     class BuyButtonListener implements ActionListener {
@@ -49,6 +50,14 @@ public class CustomerController {
             tableModel.setValueAt(howMany+howManyAlreadyBooked, order-1,4);
             tableModel.fireTableDataChanged();
             shopModel.updateCellData("Items","booked",howMany+howManyAlreadyBooked,order);
+            shopModel.changeOrderTable(2,order,howMany);
+        }
+    }
+    class ListButtonListener implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            CustomerListController customerListController = new CustomerListController(activePerson,shopModel);
         }
     }
 }

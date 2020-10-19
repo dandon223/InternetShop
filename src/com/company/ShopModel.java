@@ -1,12 +1,13 @@
 package com.company;
 
+import java.awt.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ShopModel {
     private Connection connection;
-    public ShopModel(){/*
+    public ShopModel(){ /*
         this.setConnection();
         try{
             Statement statement = connection.createStatement();
@@ -15,15 +16,10 @@ public class ShopModel {
                     "itemId INT, " +
                     "personId INT, " +
                     "howManyOrdered INT, " +
+                    "howManyBought INT, " +
                     "PRIMARY KEY( id ))";
             statement.executeUpdate(sqlQuery);
-        }catch (SQLException e){
-            System.out.println(e);
-        } */
-        /*
-        try{
-            Statement statement = connection.createStatement();
-            String sqlQuery = "CREATE TABLE IF NOT EXISTS People" +
+            sqlQuery = "CREATE TABLE IF NOT EXISTS People" +
                     "(id INT UNSIGNED AUTO_INCREMENT, " +
                     "firstName varchar(255), " +
                     "lastName varchar(255), " +
@@ -51,20 +47,20 @@ public class ShopModel {
                     "VALUES (null,'Banana',5,990,0)";
             statement.executeUpdate(sqlQuery);
             sqlQuery = "INSERT INTO Items "+
-                    "VALUES (null,'Book',45,56,10)";
+                    "VALUES (null,'Book',45,56,0)";
             statement.executeUpdate(sqlQuery);
             sqlQuery = "INSERT INTO Items "+
                     "VALUES (null,'TV',1000,10,0)";
             statement.executeUpdate(sqlQuery);
             sqlQuery = "INSERT INTO Items "+
-                    "VALUES (null,'Paper',1,9999,15)";
+                    "VALUES (null,'Paper',1,9999,0)";
             statement.executeUpdate(sqlQuery);
             connection.close();
         }catch (SQLException e){
             System.out.println(e);
-        }*/
+        } */
     }
-    public Object[][] getData(){
+    public Object[][] getItemsData(){
         this.setConnection();
         ResultSet rs;
         String sqlQuery = "SELECT * FROM Items";
@@ -81,6 +77,35 @@ public class ShopModel {
                 row.add(rs.getInt("booked"));
                 data.add(row);
             }
+            connection.close();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        Object[][] data2 = new Object[data.size()][];
+        for (int i=0; i<data.size();i++) {
+            List<Object> aList = data.get(i);
+            data2[i] = aList.toArray(new Object[0]);
+        }
+        return data2;
+    }
+    public Object[][] getOrderData(int personId){
+        this.setConnection();
+        ResultSet rs;
+        String sqlQuery = "SELECT * FROM Orders";
+        List<List<Object>> data = new ArrayList<>();
+        try{
+            Statement statement = connection.createStatement();
+            rs= statement.executeQuery(sqlQuery);
+            while(rs.next()){
+                List<Object> row = new ArrayList();
+                row.add(rs.getInt("id"));
+                row.add(rs.getInt("itemId"));
+                row.add(rs.getInt("personId"));
+                row.add(rs.getInt("howManyOrdered"));
+                row.add(rs.getInt("howManyBought"));
+                data.add(row);
+            }
+            connection.close();
         } catch (SQLException e) {
             System.out.println(e);
         }
@@ -102,7 +127,9 @@ public class ShopModel {
             Statement statement = connection.createStatement();
             rs= statement.executeQuery(sqlQuery);
             if(rs.next()){
-                return new Person(rs.getString("firstName"),rs.getString("lastName"),type);
+                Person person = new Person(rs.getString("firstName"),rs.getString("lastName"),type);
+                connection.close();
+                return person;
             }
         } catch (SQLException e) {
             System.out.println(e);
@@ -119,7 +146,9 @@ public class ShopModel {
             Statement statement = connection.createStatement();
             rs= statement.executeQuery(sqlQuery);
             if(rs.next()){
-                return new Item(rs.getString("name"),rs.getInt("cost"),rs.getInt("total"),rs.getInt("booked"));
+                Item item =  new Item(rs.getString("name"),rs.getInt("cost"),rs.getInt("total"),rs.getInt("booked"));
+                connection.close();
+                return  item;
             }
         } catch (SQLException e) {
             System.out.println(e);
@@ -143,14 +172,54 @@ public class ShopModel {
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate(sqlQuery);
+            connection.close();
         }catch (SQLException e){
             return false;
         }
         return true;
     }
-    public boolean changeOrderTable(){
+    public boolean changeOrderTable(int personId, int itemId  ,int howMuch)  {
         this.setConnection();
-        return false;
+        Order order = this.findOrder(personId , itemId);
+        if(order==null){
+            String sqlQuery = "INSERT INTO Orders (id, itemId, personId, howManyOrdered, howManyBought) "+
+                    "VALUES ("+null+",'"+itemId+"','"+personId+"','"+howMuch+"','"+0+"');";
+            try {
+                Statement statement = connection.createStatement();
+                statement.executeUpdate(sqlQuery);
+                connection.close();
+                return true;
+            }catch (SQLException e){
+                System.out.println(e);
+            }
+            return false;
+        }
+        System.out.println(order.getHowManyOrdered());
+        String sqlQuery = "UPDATE Orders SET howManyOrdered = '"+ (howMuch+order.getHowManyOrdered()) +"'"+
+                " WHERE id = '"+order.getOrderId()+"'";
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(sqlQuery);
+            connection.close();
+        }catch (SQLException e){
+            return  false;
+        }
+        return true;
+    }
+    private Order findOrder(int personId, int itemId){
+        ResultSet rs;
+        String sqlQuery = "SELECT * FROM Orders"+
+                " WHERE personId = '"+personId+"'"+" AND itemId = '"+itemId+"'";
+        try {
+            Statement statement = connection.createStatement();
+            rs = statement.executeQuery(sqlQuery);
+            if(rs.next()){
+                Order order = new Order(rs.getInt("id"),personId, itemId,rs.getInt("howManyOrdered") , rs.getInt("howManyBought"));
+                return order;
+            }
+        }catch (SQLException e){
+        }
+        return null;
     }
 
 
