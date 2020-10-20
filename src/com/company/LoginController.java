@@ -4,12 +4,14 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
 public class LoginController {
 
     private LoginView loginView;
     private ShopModel shopModel;
     private Person activePerson;
     private CustomerController customerController;
+
 
     public LoginController( ShopModel shopModel){
         this.loginView = new LoginView();

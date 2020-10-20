@@ -226,6 +226,13 @@ public class ShopModel {
         }
         return true;
     }
+
+    /**
+     * ASD
+     * @param personId qwerty
+     * @param itemId asd
+     * @return asd
+     */
     private Order findOrder(int personId, int itemId){
         ResultSet rs;
         String sqlQuery = "SELECT * FROM Orders"+
