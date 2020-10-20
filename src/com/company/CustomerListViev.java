@@ -4,6 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+/**
+ * View that is shown after successful login by customer.
+ * @author Daniel
+ */
 public class CustomerListViev extends JFrame {
     private static final int DEFAULT_WIDTH = 600;
     private static final int DEFAULT_HEIGHT = 300;
@@ -16,9 +20,14 @@ public class CustomerListViev extends JFrame {
     private JButton deleteButton = new JButton("delete");
     private JButton backButton = new JButton("back");
 
-    String[] columnNames = {"id","name","cost","howManyBooked","howManyBought"};
+    private String[] columnNames = {"id","name","cost","howManyBooked","howManyBought"};
     private Object[][] data;
 
+    /**
+     *
+     * @param activePerson person currently loged in
+     * @param data data of orders made by loged in customer
+     */
     public CustomerListViev(Person activePerson, Object[][] data) {
         this.activePerson = activePerson;
         this.data = data;
@@ -31,7 +40,7 @@ public class CustomerListViev extends JFrame {
         this.setIconImage(icon.getImage());
         this.initializeView();
     }
-    void initializeView(){
+    private void initializeView(){
         tableModel = new TableModel(columnNames,data);
         table = new JTable(tableModel);
         table.setPreferredScrollableViewportSize(new Dimension(400,150));
@@ -55,6 +64,11 @@ public class CustomerListViev extends JFrame {
         southPanel.add(new JLabel("", SwingConstants.CENTER));
         this.add(southPanel,BorderLayout.SOUTH);
     }
+
+    /**
+     *
+     * @param backButtonListener add ActionListener for button
+     */
     void addBackButtonListener(ActionListener backButtonListener){
         backButton.addActionListener(backButtonListener);
     }

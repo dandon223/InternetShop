@@ -2,8 +2,15 @@ package com.company;
 
 import java.awt.*;
 
+/**
+ * starter class with main method
+ * @author Daniel
+ */
 public class MVCShop {
-
+    /**
+     * main method for starting an app
+     * @param args not needed
+     */
     public static void main(String[] args) {
 
         ShopModel shopModel = new ShopModel();

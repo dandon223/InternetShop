@@ -4,6 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+/**
+ *  view that is shown after successful login by customer
+ *  @author Daniel
+ */
 public class CustomerViev extends JFrame {
     private static final int DEFAULT_WIDTH = 600;
     private static final int DEFAULT_HEIGHT = 300;
@@ -19,17 +23,35 @@ public class CustomerViev extends JFrame {
     String[] columnNames = {"id","name","cost","total","booked"};
     private Object[][] data;
 
+    /**
+     * getter
+     * @return id of order as a string
+     */
     public String getIdOrder() {
         return idOrder.getText();
     }
+
+    /**
+     * getter
+     * @return  how many of the thing was orderd as a string
+     */
     public String getHowManyOrder(){
         return howManyOrder.getText();
     }
 
+    /**
+     * getter
+     * @return TableModel which extends AbstractTableModel
+     */
     public TableModel getTableModel() {
         return tableModel;
     }
 
+    /**
+     *
+     * @param activePerson person currently loged in
+     * @param data data of items present in the shop
+     */
     public CustomerViev(Person activePerson, Object[][] data) {
         this.activePerson = activePerson;
         this.data = data;
@@ -42,7 +64,7 @@ public class CustomerViev extends JFrame {
         this.setIconImage(icon.getImage());
         this.initializeView();
     }
-    void initializeView(){
+    private void initializeView(){
         tableModel = new TableModel(columnNames,data);
         table = new JTable(tableModel);
         table.setPreferredScrollableViewportSize(new Dimension(400,150));

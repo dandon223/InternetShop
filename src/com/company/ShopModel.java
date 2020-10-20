@@ -1,11 +1,16 @@
 package com.company;
 
+import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * takes care of all of the data in shop app
+ * @author Daniel
+ */
 public class ShopModel {
     private Connection connection;
+
     public ShopModel(){
         this.setConnection();/*
         try{
@@ -59,6 +64,11 @@ public class ShopModel {
             System.out.println(e);
         } */
     }
+
+    /**
+     * uses sql connection
+     * @return all of the data from Items table as a 2D table
+     */
     public Object[][] getItemsData(){
         //this.setConnection();
         ResultSet rs;
@@ -87,6 +97,12 @@ public class ShopModel {
         }
         return data2;
     }
+
+    /**
+     * uses sql connection
+     * @param personId person id that we want to get orders from
+     * @return  data from Orders table, but only ones that were ordered by person known from personId, as a 2D table
+     */
     public Object[][] getOrderData(int personId){
         //this.setConnection();
         ResultSet rs;
@@ -116,6 +132,14 @@ public class ShopModel {
         }
         return data2;
     }
+
+    /**
+     * uses sql connection
+     * @param login login that was typed in
+     * @param password password that was typed in
+     * @param type if a person trying to log in is customer of staff
+     * @return Person in database that login and password match or null
+     */
     public Person getPerson(String login , String password, String type){
         //this.setConnection();
         ResultSet rs;
@@ -137,6 +161,12 @@ public class ShopModel {
 
         return null;
     }
+
+    /**
+     * uses sql connection
+     * @param id id of a person we search for
+     * @return Person that id match or null
+     */
     public Person getPerson(int id){
         //this.setConnection();
         ResultSet rs;
@@ -156,6 +186,12 @@ public class ShopModel {
 
         return null;
     }
+
+    /**
+     * uses sql connection
+     * @param id id of an item we search for
+     * @return Item from database or null
+     */
     public Item getItem(int id){
         //this.setConnection();
         ResultSet rs;
@@ -184,10 +220,19 @@ public class ShopModel {
             System.out.println(e +"185");
         }
     }
-    public boolean updateCellData(String tableName,String whatColumn, int changeToWhat, int whatRow ){
+
+    /**
+     * uses sql connection
+     * @param tableName table name that we will wabt to update, Orders, Items or Persons
+     * @param whatColumn  in what column in table we want to change
+     * @param changeToWhat value of cell we want to change to
+     * @param id id of a row we want to change
+     * @return true if success otherwise false
+     */
+    public boolean updateCellData(String tableName,String whatColumn, int changeToWhat, int id ){
         //this.setConnection();
         String sqlQuery = "UPDATE " +tableName+ " SET "+whatColumn+" = '"+changeToWhat+"'"+
-                " WHERE id = '"+whatRow+"'";
+                " WHERE id = '"+id+"'";
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate(sqlQuery);
@@ -198,7 +243,16 @@ public class ShopModel {
         }
         return true;
     }
-    public boolean changeOrderTable(int personId, int itemId  ,int howMuch)  {
+
+    /**
+     * uses sql connection
+     * @param personId id of a person whose order we want to update
+     * @param itemId id of an item which we want to update
+     * @param whatColumn what column we want to change cell in
+     * @param howMuch by how much we want to change
+     * @return true if success otherwise false
+     */
+    public boolean updateOrderTable(int personId, int itemId  ,String whatColumn, int howMuch)  {
         //this.setConnection();
         Order order = this.findOrder(personId , itemId);
         if(order==null){
@@ -214,7 +268,13 @@ public class ShopModel {
             }
             return false;
         }
-        String sqlQuery = "UPDATE Orders SET howManyOrdered = '"+ (howMuch+order.getHowManyOrdered()) +"'"+
+        int previousNumber = 0;
+        if(whatColumn=="howManyOrdered")
+            previousNumber = order.getHowManyOrdered();
+        else
+            previousNumber = order.getHowManyBought();
+
+        String sqlQuery = "UPDATE Orders SET " +whatColumn+ " = '"+ (howMuch+previousNumber) +"'"+
                 " WHERE id = '"+order.getOrderId()+"'";
         try {
             Statement statement = connection.createStatement();
@@ -227,12 +287,6 @@ public class ShopModel {
         return true;
     }
 
-    /**
-     * ASD
-     * @param personId qwerty
-     * @param itemId asd
-     * @return asd
-     */
     private Order findOrder(int personId, int itemId){
         ResultSet rs;
         String sqlQuery = "SELECT * FROM Orders"+

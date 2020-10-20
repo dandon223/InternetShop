@@ -4,7 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-
+/**
+ * start viev of the app
+ * @author Daniel
+ */
 class LoginView extends JFrame {
     private static final int DEFAULT_WIDTH = 500;
     private static final int DEFAULT_HEIGHT = 400;
@@ -28,13 +31,26 @@ class LoginView extends JFrame {
         this.initializeView();
     }
 
+    /**
+     * getter
+     * @return typed login
+     */
     String getLoginText(){
         return loginField.getText();
     }
 
+    /**
+     * getter
+     * @return typed password
+     */
     char[] getPasswordText(){
         return passwordField.getPassword();
     }
+
+    /**
+     * getter
+     * @return type of person who is logging in , customer or staff
+     */
     String getPersonType()
     {
         if(staffButton.isSelected())
@@ -42,11 +58,16 @@ class LoginView extends JFrame {
         else
             return "Customer";
     }
+
+    /**
+     *
+     * @param LoginButtonListener button listener
+     */
     void addLoginListener(ActionListener LoginButtonListener){
         loginButton.addActionListener(LoginButtonListener);
     }
 
-    void initializeView() {
+    private void initializeView() {
 
         JPanel southPanel = new JPanel();
         southPanel.setLayout(new GridLayout(4, 2));
@@ -77,6 +98,10 @@ class LoginView extends JFrame {
         label.setIcon(new ImageIcon("shop-icon.png"));
         this.add(label,BorderLayout.CENTER);
     }
+
+    /**
+     * clears login and password fields
+     */
     public void clearTexts(){
         loginField.setText("");
         passwordField.setText("");

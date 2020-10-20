@@ -4,12 +4,21 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Controller for customerView, view that is shown after successful login by customer.
+ * @author Daniel
+ */
 public class CustomerController {
 
     private Person activePerson;
     private ShopModel shopModel;
     private CustomerViev customerViev;
 
+    /**
+     *
+     * @param shopModel model which consists of data that will be shown by CustomerView
+     * @param activePerson person that is currently loged in
+     */
     public CustomerController( ShopModel shopModel, Person activePerson) {
         this.shopModel = shopModel;
         this.activePerson = activePerson;
@@ -50,7 +59,7 @@ public class CustomerController {
             tableModel.setValueAt(howMany+howManyAlreadyBooked, order-1,4);
             tableModel.fireTableDataChanged();
             shopModel.updateCellData("Items","booked",howMany+howManyAlreadyBooked,order);
-            shopModel.changeOrderTable(activePerson.getId(),order,howMany);
+            shopModel.updateOrderTable(activePerson.getId(),order,"howManyOrdered",howMany);
         }
     }
     class ListButtonListener implements ActionListener{

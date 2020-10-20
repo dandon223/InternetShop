@@ -4,7 +4,10 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
+/**
+ * controller for loginView, first view after start of an app
+ * @author Daniel
+ */
 public class LoginController {
 
     private LoginView loginView;
@@ -12,7 +15,10 @@ public class LoginController {
     private Person activePerson;
     private CustomerController customerController;
 
-
+    /**
+     *
+     * @param shopModel all of data for shop
+     */
     public LoginController( ShopModel shopModel){
         this.loginView = new LoginView();
         this.shopModel = shopModel;
