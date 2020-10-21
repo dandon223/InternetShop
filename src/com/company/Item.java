@@ -8,23 +8,20 @@ public class Item {
     private int id;
     private String name;
     private int cost;
-    private int total;
-    private int booked;
+    private int howManyLeft;
 
     /**
      *
      * @param id id of item in shop as is implemented in sql model
      * @param name name of a product
      * @param cost cost of a product
-     * @param total total number of products in shop
-     * @param booked number of booked products in shop
+     * @param howManyLeft number of products in shop that can be still bought
      */
-    public Item(int id,String name, int cost, int total, int booked) {
+    public Item(int id,String name, int cost, int howManyLeft) {
         this.id = id;
         this.name = name;
         this.cost = cost;
-        this.total = total;
-        this.booked = booked;
+        this.howManyLeft = howManyLeft;
     }
 
     /**
@@ -55,15 +52,7 @@ public class Item {
      * getter
      * @return total number of items in shop
      */
-    public int getTotal() {
-        return total;
-    }
-
-    /**
-     * getter
-     * @return booked number of items in shop
-     */
-    public int getBooked() {
-        return booked;
+    public int getHowManyLeft() {
+        return howManyLeft;
     }
 }

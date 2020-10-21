@@ -20,7 +20,7 @@ public class CustomerViev extends JFrame {
     private JButton buyButton = new JButton("buy");
     private JButton exitButton = new JButton("exit");
     private JButton listButton = new JButton("List");
-    String[] columnNames = {"id","name","cost","total","booked"};
+    String[] columnNames = {"id","name","cost","how many left"};
     private Object[][] data;
 
     /**

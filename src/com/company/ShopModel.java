@@ -12,7 +12,7 @@ public class ShopModel {
     private Connection connection;
 
     public ShopModel(){
-        this.setConnection();/*
+        this.setConnection();
         try{
             Statement statement = connection.createStatement();
             String sqlQuery = "CREATE TABLE IF NOT EXISTS Orders" +
@@ -43,26 +43,25 @@ public class ShopModel {
                     "(id INT UNSIGNED AUTO_INCREMENT, " +
                     "name varchar(255), " +
                     "cost INT, " +
-                    "total INT, " +
-                    "booked INT, " +
+                    "howManyLeft INT, " +
                     "PRIMARY KEY( id ))";
             statement.executeUpdate(sqlQuery);
             sqlQuery = "INSERT INTO Items "+
-                    "VALUES (null,'Banana',5,990,0)";
+                    "VALUES (null,'Banana',5,990)";
             statement.executeUpdate(sqlQuery);
             sqlQuery = "INSERT INTO Items "+
-                    "VALUES (null,'Book',45,56,0)";
+                    "VALUES (null,'Book',45,56)";
             statement.executeUpdate(sqlQuery);
             sqlQuery = "INSERT INTO Items "+
-                    "VALUES (null,'TV',1000,10,0)";
+                    "VALUES (null,'TV',1000,10)";
             statement.executeUpdate(sqlQuery);
             sqlQuery = "INSERT INTO Items "+
-                    "VALUES (null,'Paper',1,9999,0)";
+                    "VALUES (null,'Paper',1,9999)";
             statement.executeUpdate(sqlQuery);
-            connection.close();
+            //connection.close();
         }catch (SQLException e){
-            System.out.println(e);
-        } */
+            System.out.println(e +"63");
+        }
     }
 
     /**
@@ -82,8 +81,7 @@ public class ShopModel {
                 row.add(rs.getInt("id"));
                 row.add(rs.getString("name"));
                 row.add(rs.getInt("cost"));
-                row.add(rs.getInt("total"));
-                row.add(rs.getInt("booked"));
+                row.add(rs.getInt("howManyLeft"));
                 data.add(row);
             }
             //connection.close();
@@ -201,7 +199,7 @@ public class ShopModel {
             Statement statement = connection.createStatement();
             rs= statement.executeQuery(sqlQuery);
             if(rs.next()){
-                Item item =  new Item(rs.getInt("id"),rs.getString("name"),rs.getInt("cost"),rs.getInt("total"),rs.getInt("booked"));
+                Item item =  new Item(rs.getInt("id"),rs.getString("name"),rs.getInt("cost"),rs.getInt("howManyLeft"));
                 //connection.close();
                 return  item;
             }
@@ -221,73 +219,31 @@ public class ShopModel {
         }
     }
 
-    /**
-     * uses sql connection
-     * @param tableName table name that we will wabt to update, Orders, Items or Persons
-     * @param whatColumn  in what column in table we want to change
-     * @param changeToWhat value of cell we want to change to
-     * @param id id of a row we want to change
-     * @return true if success otherwise false
-     */
-    public boolean updateCellData(String tableName,String whatColumn, int changeToWhat, int id ){
-        //this.setConnection();
-        String sqlQuery = "UPDATE " +tableName+ " SET "+whatColumn+" = '"+changeToWhat+"'"+
-                " WHERE id = '"+id+"'";
-        try {
-            Statement statement = connection.createStatement();
-            statement.executeUpdate(sqlQuery);
-            //connection.close();
-        }catch (SQLException e){
-            System.out.println(e +"197");
-            return false;
-        }
-        return true;
+    public boolean updateHowManyLeftItems(int changeToWhat , int whatItem){
+        String sqlQuery = "UPDATE Items SET howManyLeft = '"+changeToWhat+"' WHERE id = '"+whatItem+"'";
+        return this.executeUpdate(sqlQuery);
+    }
+    public boolean updateBookedOrder(int changeToWhat , int whatOrder){
+        String sqlQuery = "UPDATE Orders SET howManyBooked = '"+changeToWhat+"' WHERE id = '"+whatOrder+"'";
+        return this.executeUpdate(sqlQuery);
+    }
+    public boolean updateOrderedOrder(int changeToWhat , int orderId){
+        String sqlQuery = "UPDATE Orders SET howManyOrdered = '"+changeToWhat+"' WHERE id = '"+orderId+"'";
+        return this.executeUpdate(sqlQuery);
+    }
+    public boolean insertOrder(int howMuch, Person person , int itemId){
+        String sqlQuery = "INSERT INTO Orders (id, itemId, personId, howManyOrdered, howManyBought) "+
+                "VALUES ("+null+",'"+itemId+"','"+person.getId()+"','"+howMuch+"','"+0+"');";
+        return this.executeUpdate(sqlQuery);
     }
 
     /**
-     * uses sql connection
-     * @param personId id of a person whose order we want to update
-     * @param itemId id of an item which we want to update
-     * @param whatColumn what column we want to change cell in
-     * @param howMuch by how much we want to change
-     * @return true if success otherwise false
+     * uses sql connection , searches Orders table for order
+     * @param personId id of a person who orderd
+     * @param itemId item id of an item which was orderd
+     * @return
      */
-    public boolean updateOrderTable(int personId, int itemId  ,String whatColumn, int howMuch)  {
-        //this.setConnection();
-        Order order = this.findOrder(personId , itemId);
-        if(order==null){
-            String sqlQuery = "INSERT INTO Orders (id, itemId, personId, howManyOrdered, howManyBought) "+
-                    "VALUES ("+null+",'"+itemId+"','"+personId+"','"+howMuch+"','"+0+"');";
-            try {
-                Statement statement = connection.createStatement();
-                statement.executeUpdate(sqlQuery);
-                //connection.close();
-                return true;
-            }catch (SQLException e){
-                System.out.println(e +"213");
-            }
-            return false;
-        }
-        int previousNumber = 0;
-        if(whatColumn=="howManyOrdered")
-            previousNumber = order.getHowManyOrdered();
-        else
-            previousNumber = order.getHowManyBought();
-
-        String sqlQuery = "UPDATE Orders SET " +whatColumn+ " = '"+ (howMuch+previousNumber) +"'"+
-                " WHERE id = '"+order.getOrderId()+"'";
-        try {
-            Statement statement = connection.createStatement();
-            statement.executeUpdate(sqlQuery);
-            //connection.close();
-        }catch (SQLException e){
-            System.out.println(e +"225");
-            return  false;
-        }
-        return true;
-    }
-
-    private Order findOrder(int personId, int itemId){
+    public Order findOrder(int personId, int itemId){
         ResultSet rs;
         String sqlQuery = "SELECT * FROM Orders"+
                 " WHERE personId = '"+personId+"'"+" AND itemId = '"+itemId+"'";
@@ -304,6 +260,17 @@ public class ShopModel {
             System.out.println(e +"244");
         }
         return null;
+    }
+    private boolean executeUpdate(String sqlQuery){
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(sqlQuery);
+            //connection.close();
+        }catch (SQLException e){
+            System.out.println(e +"197");
+            return false;
+        }
+        return true;
     }
 
 

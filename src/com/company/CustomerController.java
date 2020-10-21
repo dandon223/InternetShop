@@ -32,23 +32,22 @@ public class CustomerController {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             TableModel tableModel = customerViev.getTableModel();
-            int order;
+            int itemId;
             int howMany;
             try{
-                order = Integer.parseInt(customerViev.getIdOrder());
+                itemId = Integer.parseInt(customerViev.getIdOrder());
                 howMany = Integer.parseInt(customerViev.getHowManyOrder());
 
             }catch (NumberFormatException e ){
                 JOptionPane.showMessageDialog(customerViev,"Please input only numbers. Thank you!");
                 return;
             }
-            if(order > tableModel.getRowCount()){
+            if(itemId > tableModel.getRowCount()){
                 JOptionPane.showMessageDialog(customerViev,"Please check your order number. Thank you!");
                 return;
             }
-            int howManyAlreadyBooked = (int) tableModel.getValueAt(order-1,4);
-            int howManyTotal = (Integer) tableModel.getValueAt(order-1,3);
-            if(howManyTotal < howManyAlreadyBooked +howMany){
+            int howManyLeft = (int) tableModel.getValueAt(itemId-1,3);
+            if(howManyLeft < howMany){
                 JOptionPane.showMessageDialog(customerViev,"Unfortunately you try to order to much!");
                 return;
             }
@@ -56,10 +55,17 @@ public class CustomerController {
                 JOptionPane.showMessageDialog(customerViev,"You can only buy positive number of things.");
                 return;
             }
-            tableModel.setValueAt(howMany+howManyAlreadyBooked, order-1,4);
+            tableModel.setValueAt(howManyLeft-howMany, itemId-1,3);
             tableModel.fireTableDataChanged();
-            shopModel.updateCellData("Items","booked",howMany+howManyAlreadyBooked,order);
-            shopModel.updateOrderTable(activePerson.getId(),order,"howManyOrdered",howMany);
+
+            Order order = shopModel.findOrder(activePerson.getId(),itemId);
+            if(order==null){
+                shopModel.insertOrder(howMany,activePerson,itemId);
+                shopModel.updateHowManyLeftItems(howManyLeft-howMany,itemId);
+            }else {
+                shopModel.updateOrderedOrder(howMany +order.getHowManyOrdered(), order.getOrderId());
+                shopModel.updateHowManyLeftItems(howManyLeft- howMany,itemId);
+            }
         }
     }
     class ListButtonListener implements ActionListener{
