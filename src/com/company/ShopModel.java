@@ -12,7 +12,7 @@ public class ShopModel {
     private Connection connection;
 
     public ShopModel(){
-        this.setConnection();
+        this.setConnection(); /*
         try{
             Statement statement = connection.createStatement();
             String sqlQuery = "CREATE TABLE IF NOT EXISTS Orders" +
@@ -61,7 +61,7 @@ public class ShopModel {
             //connection.close();
         }catch (SQLException e){
             System.out.println(e +"63");
-        }
+        } */
     }
 
     /**
@@ -209,31 +209,49 @@ public class ShopModel {
 
         return null;
     }
-
-    private void setConnection() {
-        try {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/shop?allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "ReytanPW99");
-        } catch (ClassNotFoundException | SQLException e){
-            System.out.println(e +"185");
-        }
-    }
-
-    public boolean updateHowManyLeftItems(int changeToWhat , int whatItem){
-        String sqlQuery = "UPDATE Items SET howManyLeft = '"+changeToWhat+"' WHERE id = '"+whatItem+"'";
+    /**
+     * wrapper for updating how many left column in Items table
+     * @param changeToWhat what to change to in cell
+     * @param itemId id of an item
+     * @return true if successful , otherwise false
+     */
+    public boolean updateHowManyLeftItems(int changeToWhat , int itemId){
+        String sqlQuery = "UPDATE Items SET howManyLeft = '"+changeToWhat+"' WHERE id = '"+itemId+"'";
         return this.executeUpdate(sqlQuery);
     }
-    public boolean updateBookedOrder(int changeToWhat , int whatOrder){
-        String sqlQuery = "UPDATE Orders SET howManyBooked = '"+changeToWhat+"' WHERE id = '"+whatOrder+"'";
+
+    /**
+     * wrapper for updating booked column in Orders table
+     * @param changeToWhat what to change to in cell
+     * @param orderId id of an item
+     * @return true if successful , otherwise false
+     */
+    public boolean updateBookedOrder(int changeToWhat , int orderId){
+        String sqlQuery = "UPDATE Orders SET howManyBooked = '"+changeToWhat+"' WHERE id = '"+orderId+"'";
         return this.executeUpdate(sqlQuery);
     }
+
+    /**
+     * wrapper for updating ordered column in Orders table
+     * @param changeToWhat what to change to in cell
+     * @param orderId id of an item
+     * @return true if successful , otherwise false
+     */
     public boolean updateOrderedOrder(int changeToWhat , int orderId){
         String sqlQuery = "UPDATE Orders SET howManyOrdered = '"+changeToWhat+"' WHERE id = '"+orderId+"'";
         return this.executeUpdate(sqlQuery);
     }
-    public boolean insertOrder(int howMuch, Person person , int itemId){
+
+    /**
+     * wrapper for inserting new order  Orders table
+     * @param howMuch how much was ordered
+     * @param personId what person makes order
+     * @param itemId what item person orders
+     * @return true if successful , otherwise false
+     */
+    public boolean insertOrder(int howMuch, int personId , int itemId){
         String sqlQuery = "INSERT INTO Orders (id, itemId, personId, howManyOrdered, howManyBought) "+
-                "VALUES ("+null+",'"+itemId+"','"+person.getId()+"','"+howMuch+"','"+0+"');";
+                "VALUES ("+null+",'"+itemId+"','"+personId+"','"+howMuch+"','"+0+"');";
         return this.executeUpdate(sqlQuery);
     }
 
@@ -241,7 +259,7 @@ public class ShopModel {
      * uses sql connection , searches Orders table for order
      * @param personId id of a person who orderd
      * @param itemId item id of an item which was orderd
-     * @return
+     * @return found order or null if nothing was found
      */
     public Order findOrder(int personId, int itemId){
         ResultSet rs;
@@ -273,5 +291,13 @@ public class ShopModel {
         return true;
     }
 
+    private void setConnection() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/shop?allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "ReytanPW99");
+        } catch (ClassNotFoundException | SQLException e){
+            System.out.println(e +"185");
+        }
+    }
 
 }

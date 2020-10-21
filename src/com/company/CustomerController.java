@@ -59,13 +59,12 @@ public class CustomerController {
             tableModel.fireTableDataChanged();
 
             Order order = shopModel.findOrder(activePerson.getId(),itemId);
-            if(order==null){
-                shopModel.insertOrder(howMany,activePerson,itemId);
-                shopModel.updateHowManyLeftItems(howManyLeft-howMany,itemId);
-            }else {
+            if(order==null)
+                shopModel.insertOrder(howMany,activePerson.getId(),itemId);
+            else
                 shopModel.updateOrderedOrder(howMany +order.getHowManyOrdered(), order.getOrderId());
-                shopModel.updateHowManyLeftItems(howManyLeft- howMany,itemId);
-            }
+
+            shopModel.updateHowManyLeftItems(howManyLeft-howMany,itemId);
         }
     }
     class ListButtonListener implements ActionListener{
