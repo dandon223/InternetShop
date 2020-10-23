@@ -1,6 +1,9 @@
-package com.company;
+package com.company.models;
 
-import javax.swing.*;
+import com.company.models.Item;
+import com.company.models.Order;
+import com.company.models.Person;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

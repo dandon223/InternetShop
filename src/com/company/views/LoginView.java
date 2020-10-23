@@ -1,4 +1,4 @@
-package com.company;
+package com.company.views;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
  * start viev of the app
  * @author Daniel
  */
-class LoginView extends JFrame {
+public class LoginView extends JFrame {
     private static final int DEFAULT_WIDTH = 500;
     private static final int DEFAULT_HEIGHT = 400;
 
@@ -35,7 +35,7 @@ class LoginView extends JFrame {
      * getter
      * @return typed login
      */
-    String getLoginText(){
+    public String getLoginText(){
         return loginField.getText();
     }
 
@@ -43,7 +43,7 @@ class LoginView extends JFrame {
      * getter
      * @return typed password
      */
-    char[] getPasswordText(){
+    public char[] getPasswordText(){
         return passwordField.getPassword();
     }
 
@@ -51,7 +51,7 @@ class LoginView extends JFrame {
      * getter
      * @return type of person who is logging in , customer or staff
      */
-    String getPersonType()
+    public String getPersonType()
     {
         if(staffButton.isSelected())
             return "Staff";
@@ -63,7 +63,7 @@ class LoginView extends JFrame {
      *
      * @param LoginButtonListener button listener
      */
-    void addLoginListener(ActionListener LoginButtonListener){
+    public void addLoginListener(ActionListener LoginButtonListener){
         loginButton.addActionListener(LoginButtonListener);
     }
 

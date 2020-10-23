@@ -1,4 +1,7 @@
-package com.company;
+package com.company.views;
+
+import com.company.models.Person;
+import com.company.models.TableModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -69,7 +72,7 @@ public class CustomerListViev extends JFrame {
      * add ActionListener for button
      * @param backButtonListener ActionListener for button
      */
-    void addBackButtonListener(ActionListener backButtonListener){
+    public void addBackButtonListener(ActionListener backButtonListener){
         backButton.addActionListener(backButtonListener);
     }
 
@@ -77,7 +80,7 @@ public class CustomerListViev extends JFrame {
      * add ActionListener for button
      * @param deleteButtonListener ActionListener for button
      */
-    void addDeleteButtoNlistener(ActionListener deleteButtonListener){
+    public void addDeleteButtoNlistener(ActionListener deleteButtonListener){
         deleteButton.addActionListener(deleteButtonListener);
     }
     /**

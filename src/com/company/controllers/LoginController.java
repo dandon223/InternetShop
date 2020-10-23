@@ -1,4 +1,8 @@
-package com.company;
+package com.company.controllers;
+
+import com.company.views.LoginView;
+import com.company.models.Person;
+import com.company.models.ShopModel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -35,9 +39,12 @@ public class LoginController {
                 JOptionPane.showMessageDialog(loginView,"Please check your login or password. Thank you!");
                 return;
             }
-                activePerson = person;
-                loginView.setVisible(false);
+            activePerson = person;
+            loginView.setVisible(false);
+            if(person.getType()=="customer")
                 customerController = new CustomerController(shopModel,activePerson);
+            else
+                return;
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.company;
+package com.company.models;
 
 import javax.swing.table.AbstractTableModel;
 

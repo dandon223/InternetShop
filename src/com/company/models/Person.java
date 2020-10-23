@@ -1,4 +1,4 @@
-package com.company;
+package com.company.models;
 
 /**
  * class that simulates person who has an account in a shop

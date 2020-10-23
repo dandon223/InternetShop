@@ -1,6 +1,7 @@
-package com.company;
+package com.company.controllers;
 
-import com.mysql.cj.log.Log;
+import com.company.models.*;
+import com.company.views.CustomerViev;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

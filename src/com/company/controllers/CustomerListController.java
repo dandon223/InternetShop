@@ -1,4 +1,7 @@
-package com.company;
+package com.company.controllers;
+
+import com.company.models.*;
+import com.company.views.CustomerListViev;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

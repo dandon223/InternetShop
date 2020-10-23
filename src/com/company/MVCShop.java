@@ -1,5 +1,8 @@
 package com.company;
 
+import com.company.controllers.LoginController;
+import com.company.models.ShopModel;
+
 import java.awt.*;
 
 /**

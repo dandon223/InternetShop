@@ -1,4 +1,7 @@
-package com.company;
+package com.company.views;
+
+import com.company.models.Person;
+import com.company.models.TableModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -89,13 +92,13 @@ public class CustomerViev extends JFrame {
         southPanel.add(new JLabel("", SwingConstants.CENTER));
         this.add(southPanel,BorderLayout.SOUTH);
     }
-    void addBuyButtonListener(ActionListener buyButtonListener ){
+    public void addBuyButtonListener(ActionListener buyButtonListener ){
         buyButton.addActionListener(buyButtonListener);
     }
-    void addListButtonListener(ActionListener listButtonListener){
+    public void addListButtonListener(ActionListener listButtonListener){
         listButton.addActionListener(listButtonListener);
     }
-    void addLogOffButtonListener(ActionListener logOffButtonListener){
+    public void addLogOffButtonListener(ActionListener logOffButtonListener){
         logOffButton.addActionListener(logOffButtonListener);
     }
 }
