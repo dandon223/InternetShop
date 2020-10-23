@@ -1,5 +1,7 @@
 package com.company;
 
+import com.mysql.cj.log.Log;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,6 +27,7 @@ public class CustomerController {
         this.customerViev = new CustomerViev(activePerson, shopModel.getItemsData());
         this.customerViev.addBuyButtonListener(new BuyButtonListener());
         this.customerViev.addListButtonListener(new ListButtonListener());
+        this.customerViev.addLogOffButtonListener(new LogOffButtonListener());
     }
 
     class BuyButtonListener implements ActionListener {
@@ -72,6 +75,14 @@ public class CustomerController {
         public void actionPerformed(ActionEvent actionEvent) {
             customerViev.setVisible(false);
             CustomerListController customerListController = new CustomerListController(activePerson,shopModel);
+        }
+    }
+    class LogOffButtonListener implements  ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            customerViev.setVisible(false);
+            LoginController loginController = new LoginController(shopModel);
         }
     }
 }

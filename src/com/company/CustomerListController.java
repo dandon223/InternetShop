@@ -15,7 +15,7 @@ public class CustomerListController {
     /**
      *
      * @param shopModel model which consists of data that will be shown by CustomerListView
-     * @param activePerson person that is currently loged in
+     * @param activePerson person that is currently logged in
      */
     public CustomerListController(Person activePerson, ShopModel shopModel) {
         this.activePerson = activePerson;

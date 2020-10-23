@@ -18,7 +18,7 @@ public class CustomerViev extends JFrame {
     private JTextField idOrder = new JTextField();
     private JTextField howManyOrder = new JTextField();
     private JButton buyButton = new JButton("buy");
-    private JButton exitButton = new JButton("exit");
+    private JButton logOffButton = new JButton("log off");
     private JButton listButton = new JButton("List");
     String[] columnNames = {"id","name","cost","how many left"};
     private Object[][] data;
@@ -82,8 +82,8 @@ public class CustomerViev extends JFrame {
         southPanel.add(new JLabel("How many: ", SwingConstants.CENTER));
         southPanel.add(howManyOrder);
         southPanel.add(buyButton);
+        southPanel.add(logOffButton);
         southPanel.add(listButton);
-        southPanel.add(new JLabel("", SwingConstants.CENTER));
         southPanel.add(new JLabel("", SwingConstants.CENTER));
         southPanel.add(new JLabel("", SwingConstants.CENTER));
         southPanel.add(new JLabel("", SwingConstants.CENTER));
@@ -94,5 +94,8 @@ public class CustomerViev extends JFrame {
     }
     void addListButtonListener(ActionListener listButtonListener){
         listButton.addActionListener(listButtonListener);
+    }
+    void addLogOffButtonListener(ActionListener logOffButtonListener){
+        logOffButton.addActionListener(logOffButtonListener);
     }
 }
