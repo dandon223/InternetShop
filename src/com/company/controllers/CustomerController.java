@@ -1,7 +1,7 @@
 package com.company.controllers;
 
 import com.company.models.*;
-import com.company.views.CustomerViev;
+import com.company.views.CustomerView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -15,7 +15,7 @@ public class CustomerController {
 
     private Person activePerson;
     private ShopModel shopModel;
-    private CustomerViev customerViev;
+    private CustomerView customerView;
 
     /**
      *
@@ -25,38 +25,38 @@ public class CustomerController {
     public CustomerController( ShopModel shopModel, Person activePerson) {
         this.shopModel = shopModel;
         this.activePerson = activePerson;
-        this.customerViev = new CustomerViev(activePerson, shopModel.getItemsData());
-        this.customerViev.addBuyButtonListener(new BuyButtonListener());
-        this.customerViev.addListButtonListener(new ListButtonListener());
-        this.customerViev.addLogOffButtonListener(new LogOffButtonListener());
+        this.customerView = new CustomerView(activePerson, shopModel.getItemsData());
+        this.customerView.addBuyButtonListener(new BuyButtonListener());
+        this.customerView.addListButtonListener(new ListButtonListener());
+        this.customerView.addLogOffButtonListener(new LogOffButtonListener());
     }
 
     class BuyButtonListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-            TableModel tableModel = customerViev.getTableModel();
+            TableModel tableModel = customerView.getTableModel();
             int itemId;
             int howMany;
             try{
-                itemId = Integer.parseInt(customerViev.getIdOrder());
-                howMany = Integer.parseInt(customerViev.getHowManyOrder());
+                itemId = Integer.parseInt(customerView.getIdOrder());
+                howMany = Integer.parseInt(customerView.getHowManyOrder());
 
             }catch (NumberFormatException e ){
-                JOptionPane.showMessageDialog(customerViev,"Please input only numbers. Thank you!");
+                JOptionPane.showMessageDialog(customerView,"Please input only numbers. Thank you!");
                 return;
             }
             Item item = shopModel.getItem(itemId);
             if(item==null){
-                JOptionPane.showMessageDialog(customerViev,"Please check your order number. Thank you!");
+                JOptionPane.showMessageDialog(customerView,"Please check your order number. Thank you!");
                 return;
             }
             if(item.getHowManyLeft() < howMany){
-                JOptionPane.showMessageDialog(customerViev,"Unfortunately you try to order to much!");
+                JOptionPane.showMessageDialog(customerView,"Unfortunately you try to order to much!");
                 return;
             }
             if(howMany <=0){
-                JOptionPane.showMessageDialog(customerViev,"You can only buy positive number of things.");
+                JOptionPane.showMessageDialog(customerView,"You can only buy positive number of things.");
                 return;
             }
             Order order = shopModel.findOrder(activePerson.getId(),itemId);
@@ -74,7 +74,7 @@ public class CustomerController {
 
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-            customerViev.setVisible(false);
+            customerView.setVisible(false);
             CustomerListController customerListController = new CustomerListController(activePerson,shopModel);
         }
     }
@@ -82,7 +82,7 @@ public class CustomerController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            customerViev.setVisible(false);
+            customerView.setVisible(false);
             LoginController loginController = new LoginController(shopModel);
         }
     }

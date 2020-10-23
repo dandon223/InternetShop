@@ -3,6 +3,7 @@ package com.company.controllers;
 import com.company.views.LoginView;
 import com.company.models.Person;
 import com.company.models.ShopModel;
+import com.company.views.StaffView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -18,6 +19,7 @@ public class LoginController {
     private ShopModel shopModel;
     private Person activePerson;
     private CustomerController customerController;
+    private StaffController staffController;
 
     /**
      *
@@ -41,10 +43,10 @@ public class LoginController {
             }
             activePerson = person;
             loginView.setVisible(false);
-            if(person.getType()=="customer")
+            if(person.getType().equals("Customer"))
                 customerController = new CustomerController(shopModel,activePerson);
             else
-                return;
+                staffController = new StaffController(shopModel,activePerson);
         }
     }
 }

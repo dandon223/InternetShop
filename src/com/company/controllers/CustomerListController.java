@@ -23,7 +23,7 @@ public class CustomerListController {
     public CustomerListController(Person activePerson, ShopModel shopModel) {
         this.activePerson = activePerson;
         this.shopModel = shopModel;
-        this.customerListViev = new CustomerListViev(activePerson, shopModel.getOrderData(activePerson.getId()));
+        this.customerListViev = new CustomerListViev(activePerson, shopModel.getOrderDataCustomer(activePerson.getId()));
         this.customerListViev.addBackButtonListener(new BackButtonListener());
         this.customerListViev.addDeleteButtoNlistener(new DeleteButtonListener());
     }
@@ -67,7 +67,7 @@ public class CustomerListController {
             shopModel.updateOrderedOrder(order.getHowManyOrdered()-howManyToDelete,orderId);
             shopModel.updateHowManyLeftItems(item.getHowManyLeft()+howManyToDelete,item.getId());
             shopModel.deleteOrdersWithZeroBooked();
-            tableModel.changeData(shopModel.getOrderData(activePerson.getId()));
+            tableModel.changeData(shopModel.getOrderDataCustomer(activePerson.getId()));
             tableModel.fireTableDataChanged();
         }
     }

@@ -104,7 +104,7 @@ public class ShopModel {
      * @param personId person id that we want to get orders from
      * @return  data from Orders table, but only ones that were ordered by person known from personId, as a 2D table
      */
-    public Object[][] getOrderData(int personId){
+    public Object[][] getOrderDataCustomer(int personId){
         //this.setConnection();
         ResultSet rs;
         String sqlQuery = "SELECT * FROM Orders WHERE personId = "+personId;
@@ -118,6 +118,36 @@ public class ShopModel {
                 row.add(rs.getInt("id"));
                 row.add(item.getName());
                 row.add(item.getCost());
+                row.add(rs.getInt("howManyOrdered"));
+                row.add(rs.getInt("howManyBought"));
+                data.add(row);
+            }
+            //connection.close();
+        } catch (SQLException e) {
+            System.out.println(e +"111");
+        }
+        Object[][] data2 = new Object[data.size()][];
+        for (int i=0; i<data.size();i++) {
+            List<Object> aList = data.get(i);
+            data2[i] = aList.toArray(new Object[0]);
+        }
+        return data2;
+    }
+    public Object[][] getOrderDataStaff(){
+        //this.setConnection();
+        ResultSet rs;
+        String sqlQuery = "SELECT * FROM Orders";
+        List<List<Object>> data = new ArrayList<>();
+        try{
+            Statement statement = connection.createStatement();
+            rs= statement.executeQuery(sqlQuery);
+            while(rs.next()){
+                List<Object> row = new ArrayList();
+                Item item = this.getItem(rs.getInt("itemId"));
+                Person person = this.getPerson(rs.getInt("personId"));
+                row.add(rs.getInt("id"));
+                row.add(person.getFirstName()+ " "+person.getLastName()+", " +person.getId());
+                row.add(item.getName());
                 row.add(rs.getInt("howManyOrdered"));
                 row.add(rs.getInt("howManyBought"));
                 data.add(row);
