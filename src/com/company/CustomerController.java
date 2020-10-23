@@ -42,12 +42,12 @@ public class CustomerController {
                 JOptionPane.showMessageDialog(customerViev,"Please input only numbers. Thank you!");
                 return;
             }
-            if(itemId > tableModel.getRowCount()){
+            Item item = shopModel.getItem(itemId);
+            if(item==null){
                 JOptionPane.showMessageDialog(customerViev,"Please check your order number. Thank you!");
                 return;
             }
-            int howManyLeft = (int) tableModel.getValueAt(itemId-1,3);
-            if(howManyLeft < howMany){
+            if(item.getHowManyLeft() < howMany){
                 JOptionPane.showMessageDialog(customerViev,"Unfortunately you try to order to much!");
                 return;
             }
@@ -55,16 +55,15 @@ public class CustomerController {
                 JOptionPane.showMessageDialog(customerViev,"You can only buy positive number of things.");
                 return;
             }
-            tableModel.setValueAt(howManyLeft-howMany, itemId-1,3);
-            tableModel.fireTableDataChanged();
-
             Order order = shopModel.findOrder(activePerson.getId(),itemId);
             if(order==null)
                 shopModel.insertOrder(howMany,activePerson.getId(),itemId);
             else
                 shopModel.updateOrderedOrder(howMany +order.getHowManyOrdered(), order.getOrderId());
 
-            shopModel.updateHowManyLeftItems(howManyLeft-howMany,itemId);
+            shopModel.updateHowManyLeftItems(item.getHowManyLeft()-howMany,itemId);
+            tableModel.changeData(shopModel.getItemsData());
+            tableModel.fireTableDataChanged();
         }
     }
     class ListButtonListener implements ActionListener{

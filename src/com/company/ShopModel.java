@@ -204,7 +204,27 @@ public class ShopModel {
                 return  item;
             }
         } catch (SQLException e) {
-            System.out.println(e +"174");
+            System.out.println(e +"207");
+        }
+
+        return null;
+    }
+    public Order getOrder(int id){
+        //this.setConnection();
+        ResultSet rs;
+        String sqlQuery = "SELECT * FROM Orders"+
+                " WHERE id = "+id;
+        try{
+            Statement statement = connection.createStatement();
+            rs= statement.executeQuery(sqlQuery);
+            if(rs.next()){
+                Order order = new Order(rs.getInt("id"),this.getItem(rs.getInt("itemId")),
+                        this.getPerson(rs.getInt("personId")),rs.getInt("howManyOrdered"),rs.getInt("howManyBought"));
+                //connection.close();
+                return order;
+            }
+        } catch (SQLException e) {
+            System.out.println(e +"227");
         }
 
         return null;
@@ -240,6 +260,10 @@ public class ShopModel {
     public boolean updateOrderedOrder(int changeToWhat , int orderId){
         String sqlQuery = "UPDATE Orders SET howManyOrdered = '"+changeToWhat+"' WHERE id = '"+orderId+"'";
         return this.executeUpdate(sqlQuery);
+    }
+    public boolean deleteOrdersWithZeroBooked(){
+        String sqlQuery = "DELETE FROM Orders WHERE howManyOrdered = '"+0 +"'";
+        return  this.executeUpdate(sqlQuery);
     }
 
     /**

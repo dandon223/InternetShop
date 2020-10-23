@@ -16,7 +16,7 @@ public class CustomerListViev extends JFrame {
     private TableModel tableModel ;
 
     private JTextField idOrder = new JTextField();
-    private JTextField howManyOrder = new JTextField();
+    private JTextField howManyDelete = new JTextField();
     private JButton deleteButton = new JButton("delete");
     private JButton backButton = new JButton("back");
 
@@ -55,7 +55,7 @@ public class CustomerListViev extends JFrame {
         southPanel.add(idOrder);
 
         southPanel.add(new JLabel("How many: ", SwingConstants.CENTER));
-        southPanel.add(howManyOrder);
+        southPanel.add(howManyDelete);
         southPanel.add(deleteButton);
         southPanel.add(backButton);
         southPanel.add(new JLabel("", SwingConstants.CENTER));
@@ -66,10 +66,39 @@ public class CustomerListViev extends JFrame {
     }
 
     /**
-     *
-     * @param backButtonListener add ActionListener for button
+     * add ActionListener for button
+     * @param backButtonListener ActionListener for button
      */
     void addBackButtonListener(ActionListener backButtonListener){
         backButton.addActionListener(backButtonListener);
+    }
+
+    /**
+     * add ActionListener for button
+     * @param deleteButtonListener ActionListener for button
+     */
+    void addDeleteButtoNlistener(ActionListener deleteButtonListener){
+        deleteButton.addActionListener(deleteButtonListener);
+    }
+    /**
+     * getter
+     * @return id of order as a string
+     */
+    public String getIdOrder() {
+        return idOrder.getText();
+    }
+    /**
+     * getter
+     * @return TableModel which extends AbstractTableModel
+     */
+    public TableModel getTableModel() {
+        return tableModel;
+    }
+    /**
+     * getter
+     * @return how many user wants to delete
+     */
+    public String getHowManyDelete(){
+        return howManyDelete.getText();
     }
 }

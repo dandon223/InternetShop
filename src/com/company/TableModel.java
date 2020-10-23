@@ -80,4 +80,7 @@ public class TableModel extends AbstractTableModel {
         data[row][col] = value;
         fireTableCellUpdated(row, col);
     }
+    public void changeData(Object[][] data){
+        this.data = data;
+    }
 }
