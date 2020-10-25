@@ -5,6 +5,7 @@ import com.company.models.TableModel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class StaffView extends JFrame {
     private static final int DEFAULT_WIDTH = 700;
@@ -63,15 +64,43 @@ public class StaffView extends JFrame {
         southPanel.add(new JLabel("", SwingConstants.CENTER));
         this.add(southPanel, BorderLayout.SOUTH);
     }
-
-    public JTextField getIdOrder() {
-        return idOrder;
+    /**
+     * @param toBuyActionListener button listener
+     */
+    public void setToBuyButtonListener(ActionListener toBuyActionListener){
+        toBuyButton.addActionListener(toBuyActionListener);
+    }
+    /**
+     * @param logOffButtonListener button listener
+     */
+    public void setLogOffButtonListener(ActionListener logOffButtonListener){
+        logOffButton.addActionListener(logOffButtonListener);
+    }
+    /**
+     * @param toBookActionListener button listener
+     */
+    public void setToBookButtonListener(ActionListener toBookActionListener){
+        toBookButton.addActionListener(toBookActionListener);
     }
 
-    public JTextField getHowMany() {
-        return howMany;
+    /**
+     * getter
+     * @return id order
+     */
+    public String getIdOrder() {
+        return idOrder.getText();
     }
-
+    /**
+     * getter
+     * @return how many things youwish to do things with
+     */
+    public String getHowMany() {
+        return howMany.getText();
+    }
+    /**
+     * getter
+     * @return table model
+     */
     public TableModel getTableModel() {
         return tableModel;
     }

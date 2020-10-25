@@ -1,9 +1,5 @@
 package com.company.models;
 
-import com.company.models.Item;
-import com.company.models.Order;
-import com.company.models.Person;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -133,6 +129,11 @@ public class ShopModel {
         }
         return data2;
     }
+
+    /**
+     * uses sql connection
+     * @return all Orders table as a 2D table
+     */
     public Object[][] getOrderDataStaff(){
         //this.setConnection();
         ResultSet rs;
@@ -242,26 +243,7 @@ public class ShopModel {
 
         return null;
     }
-    public Order getOrder(int id){
-        //this.setConnection();
-        ResultSet rs;
-        String sqlQuery = "SELECT * FROM Orders"+
-                " WHERE id = "+id;
-        try{
-            Statement statement = connection.createStatement();
-            rs= statement.executeQuery(sqlQuery);
-            if(rs.next()){
-                Order order = new Order(rs.getInt("id"),this.getItem(rs.getInt("itemId")),
-                        this.getPerson(rs.getInt("personId")),rs.getInt("howManyOrdered"),rs.getInt("howManyBought"));
-                //connection.close();
-                return order;
-            }
-        } catch (SQLException e) {
-            System.out.println(e +"227");
-        }
 
-        return null;
-    }
     /**
      * wrapper for updating how many left column in Items table
      * @param changeToWhat what to change to in cell
@@ -279,8 +261,8 @@ public class ShopModel {
      * @param orderId id of an item
      * @return true if successful , otherwise false
      */
-    public boolean updateBookedOrder(int changeToWhat , int orderId){
-        String sqlQuery = "UPDATE Orders SET howManyBooked = '"+changeToWhat+"' WHERE id = '"+orderId+"'";
+    public boolean updateBoughtOrder(int changeToWhat , int orderId){
+        String sqlQuery = "UPDATE Orders SET howManyBought = '"+changeToWhat+"' WHERE id = '"+orderId+"'";
         return this.executeUpdate(sqlQuery);
     }
 
@@ -318,7 +300,7 @@ public class ShopModel {
      * @param itemId item id of an item which was orderd
      * @return found order or null if nothing was found
      */
-    public Order findOrder(int personId, int itemId){
+    public Order getOrder(int personId, int itemId){
         ResultSet rs;
         String sqlQuery = "SELECT * FROM Orders"+
                 " WHERE personId = '"+personId+"'"+" AND itemId = '"+itemId+"'";
@@ -334,6 +316,32 @@ public class ShopModel {
         }catch (SQLException e){
             System.out.println(e +"244");
         }
+        return null;
+    }
+
+    /**
+     * searches for order by its id
+     * @param id id of an order being searched
+     * @return order
+     */
+    public Order getOrder(int id){
+        //this.setConnection();
+        ResultSet rs;
+        String sqlQuery = "SELECT * FROM Orders"+
+                " WHERE id = "+id;
+        try{
+            Statement statement = connection.createStatement();
+            rs= statement.executeQuery(sqlQuery);
+            if(rs.next()){
+                Order order = new Order(rs.getInt("id"),this.getItem(rs.getInt("itemId")),
+                        this.getPerson(rs.getInt("personId")),rs.getInt("howManyOrdered"),rs.getInt("howManyBought"));
+                //connection.close();
+                return order;
+            }
+        } catch (SQLException e) {
+            System.out.println(e +"227");
+        }
+
         return null;
     }
     private boolean executeUpdate(String sqlQuery){

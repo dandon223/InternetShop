@@ -35,7 +35,6 @@ public class CustomerController {
 
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-            TableModel tableModel = customerView.getTableModel();
             int itemId;
             int howMany;
             try{
@@ -59,13 +58,14 @@ public class CustomerController {
                 JOptionPane.showMessageDialog(customerView,"You can only buy positive number of things.");
                 return;
             }
-            Order order = shopModel.findOrder(activePerson.getId(),itemId);
+            Order order = shopModel.getOrder(activePerson.getId(),itemId);
             if(order==null)
                 shopModel.insertOrder(howMany,activePerson.getId(),itemId);
             else
                 shopModel.updateOrderedOrder(howMany +order.getHowManyOrdered(), order.getOrderId());
 
             shopModel.updateHowManyLeftItems(item.getHowManyLeft()-howMany,itemId);
+            TableModel tableModel = customerView.getTableModel();
             tableModel.changeData(shopModel.getItemsData());
             tableModel.fireTableDataChanged();
         }
