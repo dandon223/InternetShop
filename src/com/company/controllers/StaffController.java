@@ -33,7 +33,7 @@ public class StaffController {
     class BuyButtonListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-            List<Integer> list = getInputs();
+            List<Integer> list = getInputs("buy");
             if(list.size()==0)
                 return;
             shopModel.updateOrderedOrder(list.get(2)-list.get(1),list.get(0));
@@ -46,7 +46,7 @@ public class StaffController {
     class BookButtonListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-            List<Integer> list = getInputs();
+            List<Integer> list = getInputs("book");
             if(list.size()==0)
                 return;
             shopModel.updateOrderedOrder(list.get(2)+list.get(1),list.get(0));
@@ -59,9 +59,10 @@ public class StaffController {
 
     /**
      * gets inputs from staffView two JTexts
+     * @param what
      * @return list of 4 integers or 0 if something wnet wrong
      */
-    public List<Integer> getInputs(){
+    public List<Integer> getInputs(String what){
         int orderId;
         int howMany;
         try{
@@ -72,19 +73,26 @@ public class StaffController {
             JOptionPane.showMessageDialog(staffView,"Please input only numbers. Thank you!");
             return new LinkedList<>();
         }
+        if(howMany <=0){
+            JOptionPane.showMessageDialog(staffView,"You can only change positive number of things.");
+            return new LinkedList<>();
+        }
         Order order = shopModel.getOrder(orderId);
         if(order==null){
             JOptionPane.showMessageDialog(staffView,"Please check your order number. Thank you!");
             return new LinkedList<>();
         }
-        if(order.getHowManyOrdered() <howMany){
+        int howManyInCell;
+        if(what.equals("buy"))
+            howManyInCell = order.getHowManyOrdered();
+        else
+            howManyInCell = order.getHowManyBought();
+
+        if(howManyInCell <howMany){
             JOptionPane.showMessageDialog(staffView,"Unfortunately there are not that many ordered!");
             return new LinkedList<>();
         }
-        if(howMany <=0){
-            JOptionPane.showMessageDialog(staffView,"You can only change positive number of things.");
-            return new LinkedList<>();
-        }
+
         List<Integer> list = new LinkedList<>();
         list.add(orderId);
         list.add(howMany);
