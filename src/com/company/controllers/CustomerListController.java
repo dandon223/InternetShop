@@ -76,6 +76,7 @@ public class CustomerListController {
             }
             shopModel.updateOrderedOrder(order.getHowManyOrdered()-howManyToDelete,orderId);
             shopModel.updateHowManyLeftItems(item.getHowManyLeft()+howManyToDelete,item.getId());
+            shopModel.deleteOrdersWithZeros();
             tableModel.changeData(shopModel.getOrderDataCustomer(activePerson.getId()));
             tableModel.fireTableDataChanged();
         }

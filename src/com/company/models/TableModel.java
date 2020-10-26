@@ -19,7 +19,7 @@ public class TableModel extends AbstractTableModel {
     /**
      *
      * @param columnNames names of a columns of a table
-     * @param data data that we whant to show
+     * @param data data that we want to show
      */
     public TableModel(String[] columnNames, Object[][] data) {
         this.columnNames = columnNames;

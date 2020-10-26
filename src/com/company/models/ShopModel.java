@@ -284,8 +284,9 @@ public class ShopModel {
      * deletes orders with zero booked
      * @return true if successful otherwise false
      */
-    public boolean deleteOrdersWithZeroBooked(){
-        String sqlQuery = "DELETE FROM Orders WHERE howManyOrdered = '"+0 +"'";
+    public boolean deleteOrdersWithZeros(){
+        String sqlQuery = "DELETE FROM Orders WHERE howManyOrdered = '"+0 +"'"+
+                " AND howManyBought = '"+0+"'";
         return  this.executeUpdate(sqlQuery);
     }
 

@@ -38,10 +38,11 @@ public class CustomerListView extends JFrame {
         this.setTitle("Your list of products");
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        this.setVisible(true);
         ImageIcon icon = new ImageIcon("shop-icon.png");
         this.setIconImage(icon.getImage());
         this.initializeView();
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
     }
     private void initializeView(){
         tableModel = new TableModel(columnNames,data);

@@ -32,6 +32,7 @@ public class StaffView extends JFrame {
         ImageIcon icon = new ImageIcon("shop-icon.png");
         this.setIconImage(icon.getImage());
         this.initializeView();
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
     private void initializeView() {

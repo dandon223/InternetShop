@@ -25,6 +25,7 @@ public class LoginView extends JFrame {
         this.setTitle("Internet Shop");
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLocationRelativeTo(null);
         ImageIcon icon = new ImageIcon("shop-icon.png");
         this.setIconImage(icon.getImage());
         this.initializeView();
