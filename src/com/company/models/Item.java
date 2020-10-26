@@ -5,9 +5,21 @@ package com.company.models;
  * @author Daniel
  */
 public class Item {
+    /**
+     * unique id of an item
+     */
     private int id;
+    /**
+     * name of an item
+     */
     private String name;
+    /**
+     * cost of one such item
+     */
     private int cost;
+    /**
+     * how many still can be bought
+     */
     private int howManyLeft;
 
     /**

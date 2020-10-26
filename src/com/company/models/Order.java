@@ -5,10 +5,25 @@ package com.company.models;
  * @author Daniel
  */
 public class Order {
+    /**
+     * unique id of an order
+     */
     private int orderId;
+    /**
+     * person that ordered
+     */
     private Person person;
+    /**
+     * item that is in this order
+     */
     private Item item;
+    /**
+     * number of items ordered
+     */
     private int howManyOrdered;
+    /**
+     * number of items already bought
+     */
     private  int howManyBought;
 
     /**

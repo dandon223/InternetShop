@@ -8,6 +8,9 @@ import java.util.List;
  * @author Daniel
  */
 public class ShopModel {
+    /**
+     * sql connection
+     */
     private Connection connection;
 
     public ShopModel(){
@@ -276,6 +279,11 @@ public class ShopModel {
         String sqlQuery = "UPDATE Orders SET howManyOrdered = '"+changeToWhat+"' WHERE id = '"+orderId+"'";
         return this.executeUpdate(sqlQuery);
     }
+
+    /**
+     * deletes orders with zero booked
+     * @return true if successful otherwise false
+     */
     public boolean deleteOrdersWithZeroBooked(){
         String sqlQuery = "DELETE FROM Orders WHERE howManyOrdered = '"+0 +"'";
         return  this.executeUpdate(sqlQuery);
@@ -344,6 +352,12 @@ public class ShopModel {
 
         return null;
     }
+
+    /**
+     * wrapper for executeUpdate for sql
+     * @param sqlQuery string with sql statement
+     * @return true if successful otherwise false
+     */
     private boolean executeUpdate(String sqlQuery){
         try {
             Statement statement = connection.createStatement();
@@ -356,6 +370,9 @@ public class ShopModel {
         return true;
     }
 
+    /**
+     * sets connection with sql database
+     */
     private void setConnection() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");

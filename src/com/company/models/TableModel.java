@@ -7,7 +7,13 @@ import javax.swing.table.AbstractTableModel;
  * @author Daniel
  */
 public class TableModel extends AbstractTableModel {
+    /**
+     * column names for JTable to show
+     */
     private String[] columnNames;
+    /**
+     * data for JTable to show
+     */
     private Object[][] data;
 
     /**
@@ -80,6 +86,11 @@ public class TableModel extends AbstractTableModel {
         data[row][col] = value;
         fireTableCellUpdated(row, col);
     }
+
+    /**
+     * used for updating data , then view can refresh
+     * @param data data to change to
+     */
     public void changeData(Object[][] data){
         this.data = data;
     }

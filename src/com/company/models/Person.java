@@ -5,9 +5,21 @@ package com.company.models;
  * @author Daniel
  */
 public class Person {
+    /**
+     * unique id of a person
+     */
     private int id;
+    /**
+     * last name of a person
+     */
     private String lastName;
+    /**
+     * first name of a person
+     */
     private String firstName;
+    /**
+     * either Staff or Customer
+     */
     private String type;
 
     /**
