@@ -12,31 +12,41 @@ import java.awt.event.ActionListener;
  * @author Daniel
  */
 public class CustomerListController {
+    /**
+     * person that is currently logged in
+     */
     private Person activePerson;
+    /**
+     * all of data for shop
+     */
     private ShopModel shopModel;
+    /**
+     * customer list view
+     */
     private CustomerListView customerListView;
     /**
-     *
-     * @param shopModel model which consists of data that will be shown by CustomerListView
+     * constructor
+     * @param shopModel all of data for shop
      * @param activePerson person that is currently logged in
      */
     public CustomerListController(Person activePerson, ShopModel shopModel) {
         this.activePerson = activePerson;
         this.shopModel = shopModel;
         this.customerListView = new CustomerListView(activePerson, shopModel.getOrderDataCustomer(activePerson.getId()));
-        this.customerListView.addBackButtonListener(new BackButtonListener());
+        this.customerListView.addBackButtonListener(event->{customerListView.setVisible(false);
+            new CustomerController(shopModel,activePerson);});
         this.customerListView.addDeleteButtoNlistener(new DeleteButtonListener());
     }
-    class BackButtonListener implements ActionListener{
 
-        @Override
-        public void actionPerformed(ActionEvent actionEvent) {
-            customerListView.setVisible(false);
-            CustomerController customerController = new CustomerController(shopModel,activePerson);
-        }
-    }
+    /**
+     * ActionListener for delete button
+     */
     class DeleteButtonListener implements  ActionListener{
 
+        /**
+         * reads parameters from customerListView and acts accordingly
+         * @param actionEvent action event
+         */
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             TableModel tableModel = customerListView.getTableModel();

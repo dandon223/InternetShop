@@ -2,6 +2,7 @@ package com.company;
 
 import com.company.controllers.LoginController;
 import com.company.models.ShopModel;
+import com.company.views.LoginView;
 
 import java.awt.*;
 
@@ -16,7 +17,7 @@ public class MVCShop {
      */
     public static void main(String[] args) {
 
-        ShopModel shopModel = new ShopModel();
+        ShopModel shopModel = new ShopModel();;
         EventQueue.invokeLater(()->{
             LoginController loginController = new LoginController(shopModel);
 

@@ -12,13 +12,21 @@ import java.awt.event.ActionListener;
  * @author Daniel
  */
 public class CustomerController {
-
+    /**
+     * person that is currently logged in
+     */
     private Person activePerson;
+    /**
+     * all of data for shop
+     */
     private ShopModel shopModel;
+    /**
+     * customer view
+     */
     private CustomerView customerView;
 
     /**
-     *
+     * constructor
      * @param shopModel model which consists of data that will be shown by CustomerView
      * @param activePerson person that is currently loged in
      */
@@ -27,12 +35,20 @@ public class CustomerController {
         this.activePerson = activePerson;
         this.customerView = new CustomerView(activePerson, shopModel.getItemsData());
         this.customerView.addBuyButtonListener(new BuyButtonListener());
-        this.customerView.addListButtonListener(new ListButtonListener());
-        this.customerView.addLogOffButtonListener(new LogOffButtonListener());
+        this.customerView.addListButtonListener(event->{customerView.setVisible(false);
+            new CustomerListController(activePerson,shopModel);});
+        this.customerView.addLogOffButtonListener(event->{customerView.setVisible(false);
+            new LoginController(shopModel);});
     }
 
+    /**
+     * ActionListener for buy button
+     */
     class BuyButtonListener implements ActionListener {
-
+        /**
+         * reads parameters from customerView and acts accordingly
+         * @param actionEvent action event
+         */
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             int itemId;
@@ -68,22 +84,6 @@ public class CustomerController {
             TableModel tableModel = customerView.getTableModel();
             tableModel.changeData(shopModel.getItemsData());
             tableModel.fireTableDataChanged();
-        }
-    }
-    class ListButtonListener implements ActionListener{
-
-        @Override
-        public void actionPerformed(ActionEvent actionEvent) {
-            customerView.setVisible(false);
-            CustomerListController customerListController = new CustomerListController(activePerson,shopModel);
-        }
-    }
-    class LogOffButtonListener implements  ActionListener{
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            customerView.setVisible(false);
-            LoginController loginController = new LoginController(shopModel);
         }
     }
 }

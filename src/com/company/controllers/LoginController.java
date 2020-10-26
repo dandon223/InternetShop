@@ -15,14 +15,17 @@ import java.awt.event.ActionListener;
  */
 public class LoginController {
 
+    /**
+     * login view
+     */
     private LoginView loginView;
+    /**
+     * all of data for shop
+     */
     private ShopModel shopModel;
-    private Person activePerson;
-    private CustomerController customerController;
-    private StaffController staffController;
 
     /**
-     *
+     * constructor
      * @param shopModel all of data for shop
      */
     public LoginController( ShopModel shopModel){
@@ -31,8 +34,14 @@ public class LoginController {
         this.loginView.addLoginListener(new LoginButtonListener());
     }
 
+    /**
+     * ActionListener for login button
+     */
     class LoginButtonListener implements ActionListener{
-
+        /**
+         *  either CustomerController . StaffController or JOptionPane with warning shows
+         * @param actionEvent action event
+         */
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             Person person = shopModel.getPerson(loginView.getLoginText(),new String(loginView.getPasswordText()), loginView.getPersonType());
@@ -41,12 +50,11 @@ public class LoginController {
                 JOptionPane.showMessageDialog(loginView,"Please check your login or password. Thank you!");
                 return;
             }
-            activePerson = person;
             loginView.setVisible(false);
             if(person.getType().equals("Customer"))
-                customerController = new CustomerController(shopModel,activePerson);
+                 new CustomerController(shopModel,person);
             else
-                staffController = new StaffController(shopModel,activePerson);
+                 new StaffController(shopModel,person);
         }
     }
 }

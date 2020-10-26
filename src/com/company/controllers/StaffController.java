@@ -9,26 +9,32 @@ import java.awt.event.ActionListener;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * controller for StaffView
+ * @author Daniel
+ */
 public class StaffController {
-    private Person activePerson;
+    /**
+     * all of data for shop
+     */
     private ShopModel shopModel;
+    /**
+     * staff view
+     */
     private StaffView staffView;
 
+    /**
+     * constructor
+     * @param shopModel all of data for shop
+     * @param activePerson person that is currently logged in
+     */
     public StaffController( ShopModel shopModel, Person activePerson) {
         this.shopModel = shopModel;
-        this.activePerson = activePerson;
         this.staffView = new StaffView(activePerson, shopModel.getOrderDataStaff());
-        this.staffView.setLogOffButtonListener(new LogOffButtonListener());
+        this.staffView.setLogOffButtonListener(action->{staffView.setVisible(false);
+            new LoginController(shopModel);});
         this.staffView.setToBuyButtonListener(new BuyButtonListener());
         this.staffView.setToBookButtonListener(new BookButtonListener());
-    }
-    class LogOffButtonListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            staffView.setVisible(false);
-            LoginController loginController = new LoginController(shopModel);
-        }
     }
     class BuyButtonListener implements ActionListener{
         @Override
@@ -59,8 +65,8 @@ public class StaffController {
 
     /**
      * gets inputs from staffView two JTexts
-     * @param what
-     * @return list of 4 integers or 0 if something wnet wrong
+     * @param what either 'book' or 'buy'
+     * @return list of 4 integers or 0 if something went wrong
      */
     public List<Integer> getInputs(String what){
         int orderId;
