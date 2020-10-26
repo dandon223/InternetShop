@@ -25,10 +25,10 @@ public class LoginView extends JFrame {
         this.setTitle("Internet Shop");
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setVisible(true);
         ImageIcon icon = new ImageIcon("shop-icon.png");
         this.setIconImage(icon.getImage());
         this.initializeView();
+        this.setVisible(true);
     }
 
     /**

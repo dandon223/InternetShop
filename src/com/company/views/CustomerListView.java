@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
  * View that is shown after successful login by customer.
  * @author Daniel
  */
-public class CustomerListViev extends JFrame {
+public class CustomerListView extends JFrame {
     private static final int DEFAULT_WIDTH = 600;
     private static final int DEFAULT_HEIGHT = 300;
     private Person activePerson;
@@ -31,7 +31,7 @@ public class CustomerListViev extends JFrame {
      * @param activePerson person currently loged in
      * @param data data of orders made by loged in customer
      */
-    public CustomerListViev(Person activePerson, Object[][] data) {
+    public CustomerListView(Person activePerson, Object[][] data) {
         this.activePerson = activePerson;
         this.data = data;
         this.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);

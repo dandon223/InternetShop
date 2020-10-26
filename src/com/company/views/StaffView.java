@@ -29,10 +29,10 @@ public class StaffView extends JFrame {
         this.setTitle("Welcome "+activePerson.getFirstName()+ " "+activePerson.getLastName());
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setVisible(true);
         ImageIcon icon = new ImageIcon("shop-icon.png");
         this.setIconImage(icon.getImage());
         this.initializeView();
+        this.setVisible(true);
     }
     private void initializeView() {
         tableModel = new TableModel(columnNames, data);
