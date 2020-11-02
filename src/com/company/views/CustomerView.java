@@ -4,6 +4,8 @@ import com.company.models.Person;
 import com.company.models.TableModel;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
@@ -61,7 +63,7 @@ public class CustomerView extends JFrame {
         this.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         this.setTitle("Welcome "+activePerson.getFirstName()+ " "+activePerson.getLastName());
         this.setResizable(false);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         ImageIcon icon = new ImageIcon("shop-icon.png");
         this.setIconImage(icon.getImage());
         this.initializeView();
@@ -73,6 +75,10 @@ public class CustomerView extends JFrame {
         table = new JTable(tableModel);
         table.setPreferredScrollableViewportSize(new Dimension(400,150));
         table.setFillsViewportHeight(true);
+        table.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting() && table.getSelectedRow() != -1)
+                idOrder.setText(table.getValueAt(table.getSelectedRow(), 0).toString());
+        });
 
 
         JScrollPane scrollPane = new JScrollPane(table);

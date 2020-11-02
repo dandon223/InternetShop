@@ -38,7 +38,7 @@ public class LoginController {
      */
     class LoginButtonListener implements ActionListener{
         /**
-         *  either CustomerController . StaffController or JOptionPane with warning shows
+         *  either CustomerController with its view , StaffController with its view or JOptionPane with warning shows
          * @param actionEvent action event
          */
         @Override

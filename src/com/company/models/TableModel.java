@@ -94,4 +94,5 @@ public class TableModel extends AbstractTableModel {
     public void changeData(Object[][] data){
         this.data = data;
     }
+
 }

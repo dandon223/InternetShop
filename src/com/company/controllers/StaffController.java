@@ -36,6 +36,9 @@ public class StaffController {
         this.staffView.setToBuyButtonListener(new BuyButtonListener());
         this.staffView.setToBookButtonListener(new BookButtonListener());
     }
+    /**
+     * ActionListener for buy button
+     */
     class BuyButtonListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
@@ -49,6 +52,9 @@ public class StaffController {
             tableModel.fireTableDataChanged();
         }
     }
+    /**
+     * ActionListener for book button
+     */
     class BookButtonListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
