@@ -49,6 +49,10 @@ public class CustomerListView extends JFrame {
         table = new JTable(tableModel);
         table.setPreferredScrollableViewportSize(new Dimension(400,150));
         table.setFillsViewportHeight(true);
+        table.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting() && table.getSelectedRow() != -1)
+                idOrder.setText(table.getValueAt(table.getSelectedRow(), 0).toString());
+        });
 
         JScrollPane scrollPane = new JScrollPane(table);
         this.add(scrollPane,BorderLayout.NORTH);
